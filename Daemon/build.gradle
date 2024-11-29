@@ -1,0 +1,13 @@
+/**
+ * @file    build.gradle
+ * @author  Théo Bessel
+ * @brief   `Daemon` Gradle configuration
+ */
+
+java {
+    sourceSets.main.java.srcDirs = [ 'src/' ]
+}
+
+tasks.register('dummy', DefaultTask) {
+    println 'Daemon dummy task !'
+}

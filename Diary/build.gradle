@@ -1,0 +1,13 @@
+/**
+ * @file    build.gradle
+ * @author  Théo Bessel
+ * @brief   `Diary` Gradle configuration
+ */
+
+java {
+    sourceSets.main.java.srcDirs = [ 'src/' ]
+}
+
+tasks.register('dummy', DefaultTask) {
+    println 'Diary dummy task !'
+}
