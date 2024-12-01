@@ -11,3 +11,10 @@ java {
 tasks.register('dummy', DefaultTask) {
     println 'Downloader dummy task !'
 }
+
+tasks.register('run', JavaExec) {
+    dependsOn classes
+    mainClass = "Downloader"
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+}

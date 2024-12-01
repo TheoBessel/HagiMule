@@ -11,3 +11,10 @@ java {
 tasks.register('dummy', DefaultTask) {
     println 'Diary dummy task !'
 }
+
+tasks.register('run', JavaExec) {
+    dependsOn classes
+    mainClass = "Diary"
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+}

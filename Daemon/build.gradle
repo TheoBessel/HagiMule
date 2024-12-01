@@ -11,3 +11,10 @@ java {
 tasks.register('dummy', DefaultTask) {
     println 'Daemon dummy task !'
 }
+
+tasks.register('run', JavaExec) {
+    dependsOn classes
+    mainClass = "Daemon"
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+}
