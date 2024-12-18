@@ -8,6 +8,10 @@ java {
     sourceSets.main.java.srcDirs = [ 'src/' ]
 }
 
+dependencies {
+    implementation project(":Diary")
+}
+
 tasks.register('dummy', DefaultTask) {
     println 'Daemon dummy task !'
 }
@@ -17,4 +21,7 @@ tasks.register('run', JavaExec) {
     mainClass = "Daemon"
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
+
+    jvmArgs += '-Djava.security.manager'
+    jvmArgs += '-Djava.security.policy=./Daemon.policy'
 }

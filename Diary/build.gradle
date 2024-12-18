@@ -14,7 +14,10 @@ tasks.register('dummy', DefaultTask) {
 
 tasks.register('run', JavaExec) {
     dependsOn classes
-    mainClass = "Diary"
+    mainClass = 'DiaryImpl'
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
+
+    jvmArgs += '-Djava.security.manager'
+    jvmArgs += '-Djava.security.policy=./Diary.policy'
 }
