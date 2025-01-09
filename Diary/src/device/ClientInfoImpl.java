@@ -1,29 +1,24 @@
 package device;
 
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
-public class ClientInfoImpl implements ClientInfo {
-    private InetAddress address;
+public class ClientInfoImpl extends UnicastRemoteObject implements ClientInfo {
+    private String address;
     private Integer port;
 
-    public ClientInfoImpl(InetAddress address, Integer port) {
+    public ClientInfoImpl(String address, Integer port) throws RemoteException {
         this.address = address;
         this.port = port;
     }
 
-    public ClientInfoImpl(InetSocketAddress address) {
-        this.address = address.getAddress();
-        this.port = address.getPort();
-    }
-
     @Override
-    public InetAddress getAddress() {
+    public String getAddress() throws RemoteException {
         return this.address;
     }
 
     @Override
-    public Integer getPort() {
+    public Integer getPort() throws RemoteException {
         return this.port;
     }
 }

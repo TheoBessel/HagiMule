@@ -1,5 +1,4 @@
 package diary;
-import java.net.InetSocketAddress;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedHashMap;
@@ -7,6 +6,7 @@ import java.util.Map;
 
 import device.ClientInfoImpl;
 import file.FileInfo;
+import file.FileInfoImpl;
 
 public class DiaryImpl extends UnicastRemoteObject implements Diary {
     /**
@@ -32,21 +32,24 @@ public class DiaryImpl extends UnicastRemoteObject implements Diary {
      * Add a new file to the diary.
      */
     public void addFile(FileInfo file) throws RemoteException {
+        FileInfo updatedFile = this.files.get(file.getName());
+        if (updatedFile == null) {
+            updatedFile = new FileInfoImpl(file.getName(), file.getSize());
+        }
+
         try {
-            FileInfo updatedFile = getFile(file.getName());
-            updatedFile = updatedFile == null ? file : updatedFile;
-            updatedFile.addOwner(new ClientInfoImpl(new InetSocketAddress(getClientHost(), 5000)));
-
-            this.files.put(
-                updatedFile.getName(),
-                updatedFile
-            );
-
-            System.out.println("Adding file `" + updatedFile.getName() + "` with size " + updatedFile.getSize() + " to the diary !");
+            updatedFile.addOwner(new ClientInfoImpl(getClientHost(), 5000));
         } catch (Exception e) {
-            System.err.println("Error while adding file to the Diary : unknown host.");
+            System.err.println("Error while adding file from the Diary : unknown host.");
             e.printStackTrace();
         }
+
+        this.files.put(
+            updatedFile.getName(),
+            updatedFile
+        );
+
+        System.out.println("Adding file `" + updatedFile.getName() + "` with size " + updatedFile.getSize() + " to the diary !");
     }
 
     /**
@@ -54,9 +57,9 @@ public class DiaryImpl extends UnicastRemoteObject implements Diary {
      */
     public void removeFile(String name) throws RemoteException {
         try {
-            FileInfo updatedFile = getFile(name);
+            FileInfo updatedFile = this.files.get(name);
             if (updatedFile != null) {
-                updatedFile.removeOwner(new ClientInfoImpl(new InetSocketAddress(getClientHost(), 5000)));
+                updatedFile.removeOwner(new ClientInfoImpl(getClientHost(), 5000));
                 this.files.put(
                     updatedFile.getName(),
                     updatedFile
