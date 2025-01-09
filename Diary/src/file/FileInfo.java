@@ -21,7 +21,7 @@ public interface FileInfo extends Remote {
      * The getSize method returns the size of the file.
      * @return the size of the file
      */
-    public Integer getSize() throws RemoteException;
+    public Long getSize() throws RemoteException;
 
     /**
      * The getOwners method returns the owners of the file.

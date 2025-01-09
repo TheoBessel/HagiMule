@@ -9,10 +9,10 @@ import device.ClientInfo;
 
 public class FileInfoImpl extends UnicastRemoteObject implements FileInfo {
     private String name;
-    private Integer size;
+    private Long size;
     private List<ClientInfo> owners;
 
-    public FileInfoImpl(String name, Integer size) throws RemoteException {
+    public FileInfoImpl(String name, Long size) throws RemoteException {
         this.name = name;
         this.size = size;
         this.owners = new ArrayList<>();
@@ -24,7 +24,7 @@ public class FileInfoImpl extends UnicastRemoteObject implements FileInfo {
     }
 
     @Override
-    public Integer getSize() throws RemoteException {
+    public Long getSize() throws RemoteException {
         return this.size;
     }
 

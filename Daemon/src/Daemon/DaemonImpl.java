@@ -31,7 +31,7 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
         System.out.println(context);
     }
 
-    // private void addFile(String name, Integer size) throws RemoteException {
+    // private void addFile(String name, Long size) throws RemoteException {
     //     this.getDiary().addFile(new FileInfoImpl(name, size));
     // }
 
