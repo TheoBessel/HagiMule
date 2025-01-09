@@ -38,15 +38,15 @@ public class DirectoryWatcher implements Runnable {
                     try {
                         daemon.notifyDeletion(((Path) event.context())); // Notify Daemon of file deletion
                     } catch (RemoteException e) {
-                        System.err.println("Error while starting Daemon component.");
+                        System.err.println("Error while notifying Daemon");
                         e.printStackTrace();
                     }
                 });
                 key.reset();
             }
-        }
-        catch (Exception e) {       // Refaire la gestion des exceptions
-            System.out.println(e);  // Temporary (I hope so)
+        } catch (Exception e) {
+            System.err.println("Error while running DirectoryWatcher component.");
+            e.printStackTrace();
         }
     }
 }
