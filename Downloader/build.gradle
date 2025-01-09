@@ -8,13 +8,20 @@ java {
     sourceSets.main.java.srcDirs = [ 'src/' ]
 }
 
+dependencies {
+    implementation project(':Diary')
+}
+
 tasks.register('dummy', DefaultTask) {
     println 'Downloader dummy task !'
 }
 
 tasks.register('run', JavaExec) {
     dependsOn classes
-    mainClass = "Downloader"
+    mainClass = "DownloaderMain"
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
+
+    jvmArgs += '-Djava.security.manager'
+    jvmArgs += '-Djava.security.policy=./Downloader.policy'
 }

@@ -9,7 +9,7 @@ java {
 }
 
 dependencies {
-    implementation project(":Diary")
+    implementation project(':Diary')
 }
 
 tasks.register('dummy', DefaultTask) {
@@ -18,7 +18,7 @@ tasks.register('dummy', DefaultTask) {
 
 tasks.register('run', JavaExec) {
     dependsOn classes
-    mainClass = "Daemon"
+    mainClass = 'DaemonMain'
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
 
