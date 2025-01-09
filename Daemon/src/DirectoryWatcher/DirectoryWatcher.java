@@ -60,15 +60,15 @@ public class DirectoryWatcher implements Runnable {
                             }
                         }
                     } catch (RemoteException e) {
-                        System.err.println("Error while starting Daemon component.");
+                        System.err.println("Error while notifying Daemon");
                         e.printStackTrace();
                     }
                 });
                 key.reset();
             }
-        }
-        catch (Exception e) {
-            System.out.println(e);
+        } catch (Exception e) {
+            System.err.println("Error while running DirectoryWatcher component.");
+            e.printStackTrace();
         }
     }
 }
