@@ -1,6 +1,5 @@
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.util.List;
 
 import device.ClientInfo;
 import diary.Diary;
@@ -16,13 +15,10 @@ public class DownloaderMain {
             System.out.println("[===========================================]");
 
             getFile("file1", diary);
-            getOwners("file1", diary);
 
             getFile("file2", diary);
-            getOwners("file2", diary);
 
             getFile("file3", diary);
-            getOwners("file3", diary);
 
         } catch (Exception e) {
             System.err.println("Error while starting Daemon component.");
@@ -35,17 +31,11 @@ public class DownloaderMain {
         System.out.println("[============ Fichier téléchargé ===========]");
         System.out.println("  - Nom    : " + f.getName());
         System.out.println("  - Taille : " + f.getSize());
-        System.out.println("[===========================================]");
-        return f;
-    }
-
-    private static List<ClientInfo> getOwners(String name, Diary diary) throws RemoteException {
-        List<ClientInfo> o = diary.getOwners(name);
-        System.out.println("[========== Propriétaires fichier ==========]");
-        for (ClientInfo c : o) {
-            System.out.println("  - Client    : " + c.getAddress() + ":" + c.getPort());
+        System.out.println("  - Owners : ");
+        for (ClientInfo owner : f.getOwners()) {
+            System.out.println("    " + owner.getAddress() + ":" + owner.getPort());
         }
         System.out.println("[===========================================]");
-        return o;
+        return f;
     }
 }
