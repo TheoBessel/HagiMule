@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import diary.Diary;
+import file.FileInfo;
 
 public class DaemonImpl extends UnicastRemoteObject implements Daemon {
 
@@ -31,11 +32,15 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
         System.out.println(context);
     }
 
-    // private void addFile(String name, Integer size) throws RemoteException {
-    //     this.getDiary().addFile(new FileInfoImpl(name, size));
-    // }
+    @Override
+    public void notifyDeletion(String name) throws RemoteException {
+        System.out.println(name);
+        // diary.removeFile(name);
+    }
 
-    // private void removeFile(String name, Integer size) throws RemoteException {
-    //     this.getDiary().removeFile(new FileInfoImpl(name, size));
-    // }
+    @Override
+    public void notifyCreation(String name, long size) throws RemoteException {
+        System.out.println(name + " " + size);
+        // this.diary.addFile(new FileInfo(name, size));
+    }
 }

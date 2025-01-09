@@ -1,11 +1,15 @@
 package DirectoryWatcher;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardWatchEventKinds;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.rmi.RemoteException;
+import java.util.regex.Pattern;
 
 import Daemon.Daemon;
 
@@ -23,11 +27,11 @@ public class DirectoryWatcher implements Runnable {
             WatchService watcher = FileSystems.getDefault().newWatchService();
             // Watchkey creation (registration of watchable object with watchservice)
             Path workspaceRoot = Paths.get(System.getProperty("user.dir")).getParent();
+            // We assume files with the same name have the same content -> watch only for creations and deletions
             WatchKey key = Paths.get(workspaceRoot.toString(), "/downloads")
                                 .register(watcher,
                                     StandardWatchEventKinds.ENTRY_DELETE,
-                                    StandardWatchEventKinds.ENTRY_CREATE,
-                                    StandardWatchEventKinds.ENTRY_MODIFY
+                                    StandardWatchEventKinds.ENTRY_CREATE
                                 );
 
             // Watch for file deletion
@@ -36,7 +40,25 @@ public class DirectoryWatcher implements Runnable {
                 // Replace this with Daemon notification
                 key.pollEvents().stream().forEach(event -> {
                     try {
-                        daemon.notifyDeletion(((Path) event.context())); // Notify Daemon of file deletion
+                        String fileName = ((Path) event.context()).toString();
+                        // case file deletion
+                        if (
+                            event.kind().equals(StandardWatchEventKinds.ENTRY_DELETE)
+                            && !Pattern.matches(".*\\.danload",fileName
+                            )) {
+                                daemon.notifyDeletion(fileName); // Notify Daemon of file deletion
+                        }
+                        // case file creation
+                        else {
+                            if (!Pattern.matches(".*\\.danload",fileName )) {
+                                try {
+                                    Path filePath = Paths.get(workspaceRoot.toString(), "/downloads", fileName);
+                                    daemon.notifyCreation(fileName, Files.size(filePath)); // Notify Daemon of file creation
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
                     } catch (RemoteException e) {
                         System.err.println("Error while starting Daemon component.");
                         e.printStackTrace();
@@ -45,8 +67,8 @@ public class DirectoryWatcher implements Runnable {
                 key.reset();
             }
         }
-        catch (Exception e) {       // Refaire la gestion des exceptions
-            System.out.println(e);  // Temporary (I hope so)
+        catch (Exception e) {
+            System.out.println(e);
         }
     }
 }
