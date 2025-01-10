@@ -8,6 +8,16 @@ java {
     sourceSets.main.java.srcDirs = [ 'src/' ]
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'DaemonMain'
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 dependencies {
     implementation project(':Diary')
 }

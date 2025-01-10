@@ -8,6 +8,16 @@ java {
     sourceSets.main.java.srcDirs = [ 'src/' ]
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'DiaryMain'
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 tasks.register('dummy', DefaultTask) {
     println 'Diary dummy task !'
 }
