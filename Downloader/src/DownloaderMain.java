@@ -8,13 +8,14 @@ import file.FileInfo;
 public class DownloaderMain {
     public static void main(String[] args) {
         try {
-            Diary diary = (Diary) Naming.lookup("//localhost:4000/Diary");
+            String hostname = System.getenv("IP");
+            Diary diary = (Diary) Naming.lookup("//" + hostname + ":4000/Diary");
 
             System.out.println("[===========================================]");
-            System.out.printf("|----- Downloader started on port %d! -----|\n", 4000);
+            System.out.printf("|--- Downloader started %s:%d ! ---|\n", hostname, 4000);
             System.out.println("[===========================================]");
 
-            getFile("test2.ml", diary);
+            getFile("test3.ml", diary);
 
         } catch (Exception e) {
             System.err.println("Error while starting Downloader component.");

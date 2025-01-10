@@ -10,6 +10,7 @@ public class DiaryMain {
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
+        System.setProperty("java.rmi.server.hostname","172.22.221.243");
         try {
             Diary diary = new DiaryImpl();
             LocateRegistry.createRegistry(4000);
