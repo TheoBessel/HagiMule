@@ -16,6 +16,18 @@ devices=(
 #tmux new-session -d -s iode-session "ssh tbl3216@iode -t 'git clone https://github.com/TheoBessel/HagiMule.git --branch wip /work/HagiMule; cd /work/HagiMule; ./gradlew Diary:run'";
 #tmux new-session -d -s $device-session "ssh tbl3216@$device 'rm -rf /work/HagiMule; git clone https://github.com/TheoBessel/HagiMule.git --branch wip /work/HagiMule; cd /work/HagiMule; export IP=\"iode.enseeiht.fr\"; nohup ./gradlew Daemon:run >> /work/hagimule_logs.txt'"
 
+# Setup Diary
+tmux new-session -d -s iode-session "
+    ssh tbl3216@iode '
+        rm -rf /work/HagiMule;
+        git clone https://github.com/TheoBessel/HagiMule.git --branch wip /work/HagiMule;
+        cd /work/HagiMule;
+        ./gradlew jar;
+        nohup java -jar Diary/build/libs/Diary.jar &> /work/hagimule_logs.txt&
+    '
+";
+
+# Setup Clients
 for device in "${devices[@]}"; do
     tmux new-session -d -s $device-session "
         ssh tbl3216@$device '
@@ -24,7 +36,7 @@ for device in "${devices[@]}"; do
             cd /work/HagiMule;
             ./gradlew jar;
             export IP=iode.enseeiht.fr;
-            nohup java -jar Daemon/build/libs/Daemon.jar &> /work/hagimule_logs.txt
+            nohup java -jar Daemon/build/libs/Daemon.jar &> /work/hagimule_logs.txt&
         '
     ";
 done

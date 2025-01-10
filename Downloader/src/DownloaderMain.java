@@ -9,10 +9,11 @@ public class DownloaderMain {
     public static void main(String[] args) {
         try {
             String hostname = System.getenv("IP");
-            Diary diary = (Diary) Naming.lookup("//" + hostname + ":4000/Diary");
+            String port = System.getenv("PORT");
+            Diary diary = (Diary) Naming.lookup("//" + hostname + ":" + port + "/Diary");
 
             System.out.println("[===========================================]");
-            System.out.printf("|--- Downloader started %s:%d ! ---|\n", hostname, 4000);
+            System.out.printf("|--- Downloader started %s:%s ! ---|\n", hostname, port);
             System.out.println("[===========================================]");
 
             getFile("test3.ml", diary);

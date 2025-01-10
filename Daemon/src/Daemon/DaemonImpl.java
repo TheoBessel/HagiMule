@@ -14,10 +14,11 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
     public DaemonImpl() throws RemoteException {
         try {
             String hostname = System.getenv("IP");
-            diary = (Diary) Naming.lookup("//" + hostname + ":4000/Diary");
+            String port = System.getenv("PORT");
+            diary = (Diary) Naming.lookup("//" + hostname + ":" + port + "/Diary");
 
             System.out.println("[===========================================]");
-            System.out.printf("|----- Diary started %s:%d ! -----|\n", hostname, 4000);
+            System.out.printf("|----- Diary started %s:%s ! -----|\n", hostname, port);
             System.out.println("[===========================================]");
         } catch (Exception e) {
             System.err.println("Error while starting Daemon component.");
