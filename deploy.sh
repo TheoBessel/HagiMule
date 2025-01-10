@@ -24,7 +24,7 @@ for device in "${devices[@]}"; do
             cd /work/HagiMule;
             ./gradlew jar;
             export IP=iode.enseeiht.fr;
-            nohup java -jar Daemon/build/libs/Daemon.jar >> /work/hagimule_logs.txt
+            nohup java -jar Daemon/build/libs/Daemon.jar &> /work/hagimule_logs.txt
         '
     ";
 done
