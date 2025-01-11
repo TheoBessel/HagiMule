@@ -32,7 +32,7 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
                 Stream<Path> files = Files.list(downloadDir);
                 files.forEach(file -> {
                     try {
-                        notifyFileCreation(file.toString(), Files.size(file)); // Notify Daemon of file creation
+                        notifyFileCreation(file.getFileName().toString(), Files.size(file)); // Notify Daemon of file creation
                     } catch (IOException e) {
                         System.err.println("Error could not find file " + file.toString());
                     }
