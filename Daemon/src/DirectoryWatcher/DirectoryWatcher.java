@@ -25,7 +25,7 @@ public class DirectoryWatcher implements Runnable {
             // Watcher creation
             WatchService watcher = FileSystems.getDefault().newWatchService();
             // Watchkey creation (registration of watchable object with watchservice)
-            Path workspaceRoot = Paths.get(System.getProperty("user.dir")).getParent();
+            Path workspaceRoot = Paths.get(System.getProperty("user.dir"));
             // We assume files with the same name have the same content -> watch only for creations and deletions
             WatchKey key = Paths.get(workspaceRoot.toString(), "/downloads")
                                 .register(watcher,
