@@ -13,34 +13,43 @@ devices=(
     "hendrix.enseeiht.fr"
 )
 
-#tmux new-session -d -s iode-session "ssh tbl3216@iode -t 'git clone https://github.com/TheoBessel/HagiMule.git --branch wip /work/HagiMule; cd /work/HagiMule; ./gradlew Diary:run'";
-#tmux new-session -d -s $device-session "ssh tbl3216@$device 'rm -rf /work/HagiMule; git clone https://github.com/TheoBessel/HagiMule.git --branch wip /work/HagiMule; cd /work/HagiMule; export IP=\"iode.enseeiht.fr\"; nohup ./gradlew Daemon:run >> /work/hagimule_logs.txt'"
-
 # Setup Diary
+echo "Launching Diary  iode.enseeiht.fr ..."
 tmux new-session -d -s iode-session "
-    ssh tbl3216@iode '
-        rm -rf /work/HagiMule;
-        git clone https://github.com/TheoBessel/HagiMule.git --branch wip /work/HagiMule;
-        cd /work/HagiMule;
+    ssh tbl3216@iode.enseeiht.fr '
+        git clone https://github.com/TheoBessel/HagiMule.git --branch wip ~/HagiMule;
+        cd ~/HagiMule;
         ./gradlew jar;
-        nohup java -jar Diary/build/libs/Diary.jar &> /work/hagimule_logs.txt&
-    '
+        export PORT=5021;
+        java -jar Diary/build/libs/Diary.jar >> ~/hagimule_logs.txt
+    '&> ~/hagimule_logs.txt&
 ";
+
+sleep 15;
 
 # Setup Clients
 for device in "${devices[@]}"; do
+    echo "Launching Client" $device "..."
     tmux new-session -d -s $device-session "
         ssh tbl3216@$device '
-            rm -rf /work/HagiMule;
-            git clone https://github.com/TheoBessel/HagiMule.git --branch wip /work/HagiMule;
+            cp -r ~/HagiMule /work/HagiMule;
             cd /work/HagiMule;
-            ./gradlew jar;
             export IP=iode.enseeiht.fr;
-            nohup java -jar Daemon/build/libs/Daemon.jar &> /work/hagimule_logs.txt&
-        '
+            export PORT=5021;
+            java -jar Daemon/build/libs/Daemon.jar&
+            sleep 2;
+            cp /work/HagiMule/downloads/test1.ml /work/HagiMule/downloads/test3.ml
+        '&> ~/hagimule_logs_$device.txt&
     ";
+    sleep 0.1;
 done
 
+sleep 3;
 
-#git clone https://github.com/TheoBessel/HagiMule.git --branch wip /work/HagiMule; cd /work/HagiMule; ./gradlew Diary:run;
-#rm -rf /work/HagiMule; git clone https://github.com/TheoBessel/HagiMule.git --branch wip /work/HagiMule; cd /work/HagiMule; export IP=iode.enseeiht.fr; ./gradlew Daemon:run
+echo "-----------------------"
+
+# Test with downloader
+./gradlew jar
+export IP=iode.enseeiht.fr
+export PORT=5021
+java -jar Downloader/build/libs/Downloader.jar test3.ml

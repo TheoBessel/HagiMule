@@ -19,7 +19,7 @@ public class DiaryMain {
             Naming.rebind("//localhost:" + port + "/Diary", diary);
 
             System.out.println("[===========================================]");
-            System.out.printf("|------- Diary started on port %s! -------|\n", port);
+            System.out.printf("Diary started on port %s\n", port);
             System.out.println("[===========================================]");
         } catch (Exception e) {
             System.err.println("Error while starting Diary component.");

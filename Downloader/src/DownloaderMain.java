@@ -13,10 +13,10 @@ public class DownloaderMain {
             Diary diary = (Diary) Naming.lookup("//" + hostname + ":" + port + "/Diary");
 
             System.out.println("[===========================================]");
-            System.out.printf("|--- Downloader started %s:%s ! ---|\n", hostname, port);
+            System.out.printf("Downloader started %s:%s\n", hostname, port);
             System.out.println("[===========================================]");
 
-            getFile("test3.ml", diary);
+            getFile(args[0], diary);
 
         } catch (Exception e) {
             System.err.println("Error while starting Downloader component.");
