@@ -1,8 +1,8 @@
 package Daemon;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -26,13 +26,13 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
             System.out.println("[===========================================]");
 
             // Add currently owned files to the diary
-            Path workspaceRoot = Paths.get(System.getProperty("user.dir")).getParent();
+            Path workspaceRoot = Paths.get(System.getProperty("user.dir"));
             Path downloadDir = Paths.get(workspaceRoot.toString(), "/downloads");
             try {
                 Stream<Path> files = Files.list(downloadDir);
                 files.forEach(file -> {
                     try {
-                        notifyCreation(file.toString(), Files.size(file)); // Notify Daemon of file creation
+                        notifyFileCreation(file.toString(), Files.size(file)); // Notify Daemon of file creation
                     } catch (IOException e) {
                         System.err.println("Error could not find file " + file.toString());
                     }
@@ -51,23 +51,15 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
 
     }
 
-    public Diary getDiary() throws RemoteException {
-        return this.diary;
-    }
-
-    public void notifyDeletion(Path context) throws RemoteException {
-        System.out.println(context);
-    }
-
     @Override
-    public void notifyDeletion(String name) throws RemoteException {
+    public void notifyFileDeletion(String name) throws RemoteException {
         System.out.println(name);
         // diary.removeFile(name);
     }
 
     @Override
-    public void notifyCreation(String name, long size) throws RemoteException {
+    public void notifyFileCreation(String name, long size) throws RemoteException {
         System.out.println("Adding file `" + name + "` with size " + size + " to the diary !");
-        // this.diary.addFile(new FileInfoImpl(name, size));
+        this.diary.addFile(new FileInfoImpl(name, size));
     }
 }

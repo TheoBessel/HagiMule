@@ -45,14 +45,14 @@ public class DirectoryWatcher implements Runnable {
                             event.kind().equals(StandardWatchEventKinds.ENTRY_DELETE)
                             && !Pattern.matches(".*\\.danload",fileName
                             )) {
-                                daemon.notifyDeletion(fileName); // Notify Daemon of file deletion
+                                daemon.notifyFileDeletion(fileName); // Notify Daemon of file deletion
                         }
                         // case file creation
                         else {
                             if (!Pattern.matches(".*\\.danload",fileName )) {
                                 try {
                                     Path filePath = Paths.get(workspaceRoot.toString(), "/downloads", fileName);
-                                    daemon.notifyCreation(fileName, Files.size(filePath)); // Notify Daemon of file creation
+                                    daemon.notifyFileCreation(fileName, Files.size(filePath)); // Notify Daemon of file creation
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
