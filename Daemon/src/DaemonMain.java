@@ -3,6 +3,7 @@ import java.rmi.RemoteException;
 import Daemon.Daemon;
 import Daemon.DaemonImpl;
 import DirectoryWatcher.DirectoryWatcher;
+import FragmentDownloader.FragmentDownloader;
 
 public class DaemonMain {
     public static void main(String[] args) {
@@ -15,6 +16,8 @@ public class DaemonMain {
 
             while (true) {
                 // Daemon doing Daemon things
+                Thread downloader = new Thread(new FragmentDownloader());
+                downloader.start();
             }
 
         } catch (RemoteException e) {

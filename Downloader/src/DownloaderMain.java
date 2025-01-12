@@ -3,7 +3,10 @@ import java.rmi.RemoteException;
 
 import device.ClientInfo;
 import diary.Diary;
+import downloader.Downloader;
+import downloader.DownloaderImpl;
 import file.FileInfo;
+import file.fragment.FileFragment;
 
 public class DownloaderMain {
     public static void main(String[] args) {
@@ -16,7 +19,19 @@ public class DownloaderMain {
             System.out.printf("Downloader started %s:%s\n", hostname, port);
             System.out.println("[===========================================]");
 
-            getFile(args[0], diary);
+            FileInfo f = getFile(args[0], diary);
+
+            while (true) {
+                Downloader d = new DownloaderImpl(
+                    new FileFragment(
+                        f.getName(),
+                        Integer.valueOf(50),
+                        Integer.valueOf(0),
+                        f.getOwners().get(0)
+                    )
+                );
+                d.run();
+            }
 
         } catch (Exception e) {
             System.err.println("Error while starting Downloader component.");
