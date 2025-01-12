@@ -5,7 +5,8 @@
 .settings
 
 # Ignore Gradle build output directory
-build
-bin
+build/
+bin/
+*.class
 
 .DS_Store
