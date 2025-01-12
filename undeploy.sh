@@ -50,7 +50,7 @@ devices=(
 for device in "${devices[@]}"; do
     echo "Stopping Client" $device "..."
     tmux new-session -d -s $device-unsession "
-        ssh tbl3216@$device '
+        ssh -o StrictHostKeyChecking=no tbl3216@$device '
             killall nohup;
             killall java;
             rm -rf /work/HagiMule;
