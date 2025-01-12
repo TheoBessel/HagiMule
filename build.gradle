@@ -16,11 +16,11 @@ buildscript {
 allprojects {
     apply plugin: 'java'
 
-    java {
-        // Define Java version to use
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
+    // java {
+    //     // Define Java version to use
+    //     sourceCompatibility = JavaVersion.VERSION_17
+    //     targetCompatibility = JavaVersion.VERSION_17
+    // }
 }
 
 project(':Diary') {
