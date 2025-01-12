@@ -35,13 +35,15 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
                         Integer socket_port = Integer.parseInt(System.getenv("TCP_PORT"));
                         notifyFileCreation(file.getFileName().toString(), Files.size(file), socket_port); // Notify Daemon of file creation
                     } catch (IOException e) {
-                        System.err.println("Error could not find file " + file.toString());
+                        System.err.println("Error while trying to find the file `" + file.toString() + "` in the file system.");
+                        e.printStackTrace();
                     }
                 });
                 files.close();
             }
             catch (IOException e) {
                 System.err.println("Error while searching for 'downloads' directory");
+                e.printStackTrace();
             }
         } catch (Exception e) {
             System.err.println("Error while starting Daemon component.");

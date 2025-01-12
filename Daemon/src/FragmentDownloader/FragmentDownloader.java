@@ -50,6 +50,7 @@ public class FragmentDownloader implements Runnable {
             out.close();
             s.close();
         } catch (IOException e) {
+            System.err.println("Error while trying to communicate with a downloader.");
             e.printStackTrace();
         }
     }

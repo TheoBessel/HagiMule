@@ -54,10 +54,13 @@ public class DownloaderImpl implements Downloader {
             // Close the socket
             s.close();
         } catch (RemoteException e) {
+            System.err.println("Error while running Downloader component.");
             e.printStackTrace();
         } catch (UnknownHostException e) {
+            System.err.println("Error while trying to find the owner of a fragment.");
             e.printStackTrace();
         } catch (IOException e) {
+            System.err.println("Error while trying to communicate with a daemon.");
             e.printStackTrace();
         }
 

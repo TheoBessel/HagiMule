@@ -55,12 +55,13 @@ public class DirectoryWatcher implements Runnable {
                                     Integer socket_port = Integer.parseInt(System.getenv("TCP_PORT"));
                                     daemon.notifyFileCreation(fileName, Files.size(filePath), socket_port); // Notify Daemon of file creation
                                 } catch (IOException e) {
+                                    System.err.println("Error while trying to find the file `" + fileName + "` in the file system.");
                                     e.printStackTrace();
                                 }
                             }
                         }
                     } catch (RemoteException e) {
-                        System.err.println("Error while notifying Daemon");
+                        System.err.println("Error while notifying the Daemon.");
                         e.printStackTrace();
                     }
                 });

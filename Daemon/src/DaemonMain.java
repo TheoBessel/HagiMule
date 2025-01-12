@@ -27,6 +27,7 @@ public class DaemonMain {
             System.err.println("Error while starting Daemon component.");
             e.printStackTrace();
         } catch (IOException e) {
+            System.err.println("Error while sending file to a downloader.");
             e.printStackTrace();
         }
     }
