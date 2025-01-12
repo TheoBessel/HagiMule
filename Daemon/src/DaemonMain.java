@@ -17,9 +17,10 @@ public class DaemonMain {
             t.start();
 
             Integer port = Integer.parseInt(System.getenv("TCP_PORT"));
-            ServerSocket s = new ServerSocket(port);
-            while (true) {
-                new Thread(new FragmentDownloader(s.accept())).start();
+            try (ServerSocket s = new ServerSocket(port)) {
+                while (true) {
+                    new Thread(new FragmentDownloader(s.accept())).start();
+                }
             }
 
         } catch (RemoteException e) {

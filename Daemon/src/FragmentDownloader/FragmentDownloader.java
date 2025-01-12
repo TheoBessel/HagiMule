@@ -28,7 +28,8 @@ public class FragmentDownloader implements Runnable {
             OutputStream out = s.getOutputStream();
 
             // Get the request
-            String request = new LineNumberReader(in).readLine();
+            LineNumberReader reader = new LineNumberReader(in);
+            String request = reader.readLine();
 
             // Check if request form is correct
 			if (request.startsWith("getfile:")) {
@@ -44,6 +45,7 @@ public class FragmentDownloader implements Runnable {
                 // Write into the socker output
                 out.write(buffer.array());
             }
+
             in.close();
             out.close();
             s.close();
