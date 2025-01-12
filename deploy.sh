@@ -11,6 +11,39 @@ devices=(
     "eagles.enseeiht.fr"
     "epica.enseeiht.fr"
     "hendrix.enseeiht.fr"
+
+    "albator.enseeiht.fr"
+    "bouba.enseeiht.fr"
+    "calimero.enseeiht.fr"
+    "candy.enseeiht.fr"
+    "casimir.enseeiht.fr"
+    "clementine.enseeiht.fr"
+    "diabolo.enseeiht.fr"
+    "esteban.enseeiht.fr"
+    "goldorak.enseeiht.fr"
+    "heidi.enseeiht.fr"
+    "ladyoscar.enseeiht.fr"
+    "maya.enseeiht.fr"
+    "scoubidou.enseeiht.fr"
+    "snorki.enseeiht.fr"
+    "tao.enseeiht.fr"
+
+    "apollinaire.enseeiht.fr"
+    "baudelaire.enseeiht.fr"
+    "brassens.enseeiht.fr"
+    "demusset.enseeiht.fr"
+    "ferre.enseeiht.fr"
+    "gautier.enseeiht.fr"
+    "hugo.enseeiht.fr"
+    "lafontaine.enseeiht.fr"
+    "lamartine.enseeiht.fr"
+    "mallarme.enseeiht.fr"
+    "maupassant.enseeiht.fr"
+    "poe.enseeiht.fr"
+    "prevert.enseeiht.fr"
+    "rimbaud.enseeiht.fr"
+    "sand.enseeiht.fr"
+    "verlaine.enseeiht.fr"
 )
 
 # Setup Diary
@@ -31,7 +64,7 @@ sleep 15;
 for device in "${devices[@]}"; do
     echo "Launching Client" $device "..."
     tmux new-session -d -s $device-session "
-        ssh tbl3216@$device '
+        ssh -o StrictHostKeyChecking=no tbl3216@$device '
             cp -r ~/HagiMule /work/HagiMule;
             cd /work/HagiMule;
             export IP=iode.enseeiht.fr;

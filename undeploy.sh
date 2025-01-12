@@ -11,6 +11,39 @@ devices=(
     "eagles.enseeiht.fr"
     "epica.enseeiht.fr"
     "hendrix.enseeiht.fr"
+
+    "albator.enseeiht.fr"
+    "bouba.enseeiht.fr"
+    "calimero.enseeiht.fr"
+    "candy.enseeiht.fr"
+    "casimir.enseeiht.fr"
+    "clementine.enseeiht.fr"
+    "diabolo.enseeiht.fr"
+    "esteban.enseeiht.fr"
+    "goldorak.enseeiht.fr"
+    "heidi.enseeiht.fr"
+    "ladyoscar.enseeiht.fr"
+    "maya.enseeiht.fr"
+    "scoubidou.enseeiht.fr"
+    "snorki.enseeiht.fr"
+    "tao.enseeiht.fr"
+
+    "apollinaire.enseeiht.fr"
+    "baudelaire.enseeiht.fr"
+    "brassens.enseeiht.fr"
+    "demusset.enseeiht.fr"
+    "ferre.enseeiht.fr"
+    "gautier.enseeiht.fr"
+    "hugo.enseeiht.fr"
+    "lafontaine.enseeiht.fr"
+    "lamartine.enseeiht.fr"
+    "mallarme.enseeiht.fr"
+    "maupassant.enseeiht.fr"
+    "poe.enseeiht.fr"
+    "prevert.enseeiht.fr"
+    "rimbaud.enseeiht.fr"
+    "sand.enseeiht.fr"
+    "verlaine.enseeiht.fr"
 )
 
 # Stop Clients
@@ -30,7 +63,7 @@ done
 # Stop Diary
 echo "Stopping Diary ..."
 tmux new-session -d -s iode-unsession "
-    ssh tbl3216@iode.enseeiht.fr '
+    ssh -o StrictHostKeyChecking=no tbl3216@iode.enseeiht.fr '
         killall nohup;
         killall java;
         rm -rf ~/HagiMule;
@@ -38,6 +71,6 @@ tmux new-session -d -s iode-unsession "
     '&> ~/hagimule_logs.txt&
 ";
 
-sleep 0.1;
+sleep 0.2;
 
 pkill -f tmux
