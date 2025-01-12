@@ -52,7 +52,8 @@ public class DirectoryWatcher implements Runnable {
                             if (!Pattern.matches(".*\\.danload",fileName )) {
                                 try {
                                     Path filePath = Paths.get(workspaceRoot.toString(), "/downloads", fileName);
-                                    daemon.notifyFileCreation(fileName, Files.size(filePath)); // Notify Daemon of file creation
+                                    Integer socket_port = Integer.parseInt(System.getenv("TCP_PORT"));
+                                    daemon.notifyFileCreation(fileName, Files.size(filePath), socket_port); // Notify Daemon of file creation
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }

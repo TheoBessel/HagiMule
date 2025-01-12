@@ -10,6 +10,6 @@ import file.FileInfo;
  */
 public interface Diary extends Remote {
     public FileInfo getFile(String name) throws RemoteException;
-    public void addFile(FileInfo file) throws RemoteException;
+    public void addFile(FileInfo file, Integer port) throws RemoteException;
     public void removeFile(String name) throws RemoteException;
 }

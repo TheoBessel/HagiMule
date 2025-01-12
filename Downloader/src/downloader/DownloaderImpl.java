@@ -1,90 +1,63 @@
 package downloader;
 
 import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.rmi.RemoteException;
 
 import device.ClientInfo;
-import device.ClientInfoImpl;
 import file.fragment.FileFragment;
 
 public class DownloaderImpl implements Downloader {
-
     private FileFragment fragment;
-    private Socket socket;
+    private ByteBuffer buffer;
 
     public DownloaderImpl(FileFragment fragment) {
         this.fragment = fragment;
-        try {
-            Integer port = Integer.parseInt(System.getenv("PORT"));
-            this.socket = new ServerSocket(port).accept(); // ? leak ?
-        } catch (IOException e) {
-            System.err.println("Error counld not find env file");
-        }
+        this.buffer = ByteBuffer.allocate(2048);
     }
 
     @Override
     public void run() {
-        ClientInfo owner = fragment.getOwner();
         try {
-            String adress = owner.getAddress();
-            Integer port = owner.getPort();
+            // Getting the file owner
+            ClientInfo owner = fragment.getOwner();
 
-            try {
-                // Sending the request
-                Socket clientSocket = new Socket(adress, port);
-                // OutputStream cliOut = clientSocket.getOutputStream();
-                String requestText = "getfile:" + fragment.getName();
-                // byte[] request = requestText.getBytes(); // ?
-                // cliOut.write(request, 0, request.length); // ?
+            // Connecting to the owner socket
+            System.out.println("Opening new socket for host : " + owner.getAddress() + ":" + owner.getPort());
+            Socket s = new Socket(owner.getAddress(), owner.getPort());
 
-                PrintStream out = new PrintStream(socket.getOutputStream());
-                out.print(requestText);
+            // Request a fragment of the file to the owner
+            PrintStream out = new PrintStream(s.getOutputStream());
+            out.println("getfile:" + fragment.getName());
 
-                // handling response
-                ByteBuffer response = ByteBuffer.allocate(1024); // ? arbitrary max dw
-                BufferedInputStream cliIn = new BufferedInputStream(clientSocket.getInputStream());
-                // Then read response
-                while (true) {
-                    int b = cliIn.read();
-                    if (b == -1) {
-                        break;
-                    }
-                    response.put((byte) b);
-                }
+            // Reading the response
+            BufferedInputStream in = new BufferedInputStream(s.getInputStream());
+            buffer = ByteBuffer.wrap(in.readAllBytes());
 
-                // create file
-                Path workspaceRoot = Paths.get(System.getProperty("user.dir"));
-                Path downloadDir = Paths.get(workspaceRoot.toString(), "/downloads");
-                Path filePath = Paths.get(downloadDir.toString(), fragment.getName());
+            // Create the file associated to the response
+            Path workspaceRoot = Paths.get(System.getProperty("user.dir"));
+            Path downloadDir = Paths.get(workspaceRoot.toString(), "/downloads");
+            Path filePath = Paths.get(downloadDir.toString(), fragment.getName());
 
-                FileChannel testFile = FileChannel.open(filePath, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
-                testFile.write(response, fragment.getOffset());
+            // Write the content of the buffer into the file at the good offset
+            FileChannel file = FileChannel.open(filePath, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+            file.write(buffer, fragment.getOffset());
 
-                clientSocket.close();
-            } catch (UnknownHostException e) {
-                System.err.println("Error when connecting to unknown host");
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
+            // Close the socket
+            s.close();
         } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

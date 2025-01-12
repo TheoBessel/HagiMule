@@ -17,8 +17,8 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
 
     public DaemonImpl() throws RemoteException {
         try {
-            String hostname = System.getenv("IP");
-            String port = System.getenv("PORT");
+            String hostname = System.getenv("RMI_IP");
+            String port = System.getenv("RMI_PORT");
             diary = (Diary) Naming.lookup("//" + hostname + ":" + port + "/Diary");
 
             System.out.println("[===========================================]");
@@ -32,7 +32,8 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
                 Stream<Path> files = Files.list(downloadDir);
                 files.forEach(file -> {
                     try {
-                        notifyFileCreation(file.getFileName().toString(), Files.size(file)); // Notify Daemon of file creation
+                        Integer socket_port = Integer.parseInt(System.getenv("TCP_PORT"));
+                        notifyFileCreation(file.getFileName().toString(), Files.size(file), socket_port); // Notify Daemon of file creation
                     } catch (IOException e) {
                         System.err.println("Error could not find file " + file.toString());
                     }
@@ -58,8 +59,8 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
     }
 
     @Override
-    public void notifyFileCreation(String name, long size) throws RemoteException {
+    public void notifyFileCreation(String name, Long size, Integer port) throws RemoteException {
         System.out.println("Adding file `" + name + "` with size " + size + " to the diary !");
-        this.diary.addFile(new FileInfoImpl(name, size));
+        this.diary.addFile(new FileInfoImpl(name, size), port);
     }
 }

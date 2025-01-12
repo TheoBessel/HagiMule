@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.rmi.RemoteException;
 
 import Daemon.Daemon;
@@ -14,14 +16,16 @@ public class DaemonMain {
 
             t.start();
 
+            Integer port = Integer.parseInt(System.getenv("TCP_PORT"));
+            ServerSocket s = new ServerSocket(port);
             while (true) {
-                // Daemon doing Daemon things
-                Thread downloader = new Thread(new FragmentDownloader());
-                downloader.start();
+                new Thread(new FragmentDownloader(s.accept())).start();
             }
 
         } catch (RemoteException e) {
             System.err.println("Error while starting Daemon component.");
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -31,14 +31,16 @@ public class DiaryImpl extends UnicastRemoteObject implements Diary {
     /**
      * Add a new file to the diary.
      */
-    public void addFile(FileInfo file) throws RemoteException {
+    public void addFile(FileInfo file, Integer port) throws RemoteException {
         FileInfo updatedFile = this.files.get(file.getName());
         if (updatedFile == null) {
             updatedFile = new FileInfoImpl(file.getName(), file.getSize());
         }
 
         try {
-            updatedFile.addOwner(new ClientInfoImpl(getClientHost(), 5000));
+            updatedFile.addOwner(new ClientInfoImpl(getClientHost(), port));
+
+            System.out.println("Adding file `" + updatedFile.getName() + "` with size " + updatedFile.getSize() + " to the diary, with host `" + getClientHost() + ":" + port + "`.");
         } catch (Exception e) {
             System.err.println("Error while adding file from the Diary : unknown host.");
             e.printStackTrace();
@@ -48,8 +50,6 @@ public class DiaryImpl extends UnicastRemoteObject implements Diary {
             updatedFile.getName(),
             updatedFile
         );
-
-        System.out.println("Adding file `" + updatedFile.getName() + "` with size " + updatedFile.getSize() + " to the diary !");
     }
 
     /**
