@@ -45,7 +45,7 @@ public class UploadService implements Runnable {
 
                 // Read the file into the buffer
                 FileChannel file = FileChannel.open(filePath, StandardOpenOption.READ);
-                file.read(buffer, fragmentOffset);
+                file.read(buffer, 0);
                 System.out.println("Buffer is : `" + new String(buffer.array(), "ASCII") + "`");
 
                 // Write into the socket output
