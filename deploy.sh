@@ -72,7 +72,7 @@ for device in "${devices[@]}"; do
             export TCP_PORT=5022;
             java -jar Daemon/build/libs/Daemon.jar&
             sleep 2;
-            cp /work/HagiMule/downloads/test1.ml /work/HagiMule/downloads/test3.ml
+            cp /work/HagiMule/downloads/test2.ml /work/HagiMule/downloads/test3.ml
         '&> ~/hagimule_logs_$device.txt&
     ";
     sleep 0.1;
