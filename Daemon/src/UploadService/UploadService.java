@@ -48,8 +48,9 @@ public class UploadService implements Runnable {
                 file.read(buffer, fragmentOffset);
                 System.out.println("Buffer is : `" + buffer.toString() + "`");
 
-                // Write into the socker output
-                out.write(buffer.array());
+                // Write into the socket output
+                //out.write(buffer.array());
+                out.write(buffer.array(), fragmentOffset.intValue(), fragmentSize.intValue());
             }
 
             in.close();
