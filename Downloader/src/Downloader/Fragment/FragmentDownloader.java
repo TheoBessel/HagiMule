@@ -47,6 +47,8 @@ public class FragmentDownloader implements Runnable {
             Path downloadDir = Paths.get(workspaceRoot.toString(), "/downloads");
             Path filePath = Paths.get(downloadDir.toString(), fragment.getName());
 
+            System.out.println("Buffer is : `" + new String(buffer.array(), "ASCII") + "`");
+
             // Write the content of the buffer into the file at the good offset
             FileChannel file = FileChannel.open(filePath, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
             file.write(buffer, fragment.getOffset());
