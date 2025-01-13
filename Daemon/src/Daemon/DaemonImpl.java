@@ -53,7 +53,15 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
 
     @Override
     public void heartbeat() throws RemoteException {
-        
+        try {
+            this.diary.heartbeat();
+        }
+        // If the Diary has disconnected
+        catch (RemoteException e) {
+            heartbeat();
+            // has reconnected
+            // add all
+        }
     }
 
     @Override
