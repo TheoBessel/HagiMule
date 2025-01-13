@@ -3,7 +3,7 @@ import java.rmi.RemoteException;
 
 import device.ClientInfo;
 import diary.Diary;
-import downloader.DownloaderImpl;
+import downloader.FragmentDownloader;
 import file.FileInfo;
 import file.fragment.FileFragment;
 
@@ -21,7 +21,7 @@ public class DownloaderMain {
             FileInfo file = getFile(args[0], diary);
 
             new Thread(
-                new DownloaderImpl(
+                new FragmentDownloader(
                     new FileFragment(
                         file.getName(),
                         Integer.valueOf(50),

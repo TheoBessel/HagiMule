@@ -15,11 +15,11 @@ import java.rmi.RemoteException;
 import device.ClientInfo;
 import file.fragment.FileFragment;
 
-public class DownloaderImpl implements Downloader {
+public class FragmentDownloader implements Runnable {
     private FileFragment fragment;
     private ByteBuffer buffer;
 
-    public DownloaderImpl(FileFragment fragment) {
+    public FragmentDownloader(FileFragment fragment) {
         this.fragment = fragment;
         this.buffer = ByteBuffer.allocate(2048);
     }

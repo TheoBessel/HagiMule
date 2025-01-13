@@ -12,7 +12,7 @@ public class DiaryMain {
      */
     public static void main(String[] args) {
         try {
-            System.setProperty("java.rmi.server.hostname",Inet4Address.getLocalHost().getHostAddress());
+            System.setProperty("java.rmi.server.hostname", Inet4Address.getLocalHost().getHostAddress());
             Diary diary = new DiaryImpl();
             String port = System.getenv("RMI_PORT");
             LocateRegistry.createRegistry(Integer.parseInt(port));

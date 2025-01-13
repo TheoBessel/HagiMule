@@ -1,4 +1,4 @@
-package FragmentDownloader;
+package UploadService;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,11 +11,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-public class FragmentDownloader implements Runnable {
+public class UploadService implements Runnable {
     private Socket s;
     private ByteBuffer buffer;
 
-    public FragmentDownloader(Socket s) {
+    public UploadService(Socket s) {
         this.s = s;
         this.buffer = ByteBuffer.allocate(2048);
     }
