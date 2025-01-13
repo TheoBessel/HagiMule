@@ -6,44 +6,44 @@ devices=(
     "clash"
     "cooper"
     "deeppurple"
-    "doors"
-    "dylan"
-    "eagles"
-    "epica"
-    "hendrix"
+    # "doors"
+    # "dylan"
+    # "eagles"
+    # "epica"
+    # "hendrix"
 
-    "albator"
-    "bouba"
-    "calimero"
-    "candy"
-    "casimir"
-    "clementine"
-    "diabolo"
-    "esteban"
-    "goldorak"
-    "heidi"
-    "ladyoscar"
-    "maya"
-    "scoubidou"
-    "snorki"
-    "tao"
+    # "albator"
+    # "bouba"
+    # "calimero"
+    # "candy"
+    # "casimir"
+    # "clementine"
+    # "diabolo"
+    # "esteban"
+    # "goldorak"
+    # "heidi"
+    # "ladyoscar"
+    # "maya"
+    # "scoubidou"
+    # "snorki"
+    # "tao"
 
-    "apollinaire"
-    "baudelaire"
-    "brassens"
-    "demusset"
-    "ferre"
-    "gautier"
-    "hugo"
-    "lafontaine"
-    "lamartine"
-    "mallarme"
-    "maupassant"
-    "poe"
-    "prevert"
-    "rimbaud"
-    "sand"
-    "verlaine"
+    # "apollinaire"
+    # "baudelaire"
+    # "brassens"
+    # "demusset"
+    # "ferre"
+    # "gautier"
+    # "hugo"
+    # "lafontaine"
+    # "lamartine"
+    # "mallarme"
+    # "maupassant"
+    # "poe"
+    # "prevert"
+    # "rimbaud"
+    # "sand"
+    # "verlaine"
 )
 
 # Setup Diary
@@ -72,13 +72,14 @@ for device in "${devices[@]}"; do
             export TCP_PORT=5022;
             java -jar Daemon/build/libs/Daemon.jar&> /work/HagiMule/hagimule_logs.txt&
             sleep 2;
-            cp /work/HagiMule/downloads/test2.ml /work/HagiMule/downloads/test3.ml
+            cp /work/test.mp4 /work/HagiMule/downloads/test.mp4;
         '&> ~/hagimule_logs_$device.txt&
     ";
+    #/home/tbl3216/.local/bin/yt-dlp -f "642" -o /work/test.mp4 https://youtu.be/njX2bu-_Vw4?si=p3JRR_I6KgbKSxh8
     sleep 0.1;
 done
 
-sleep 3;
+sleep 20;
 
 echo "-----------------------"
 
@@ -87,4 +88,4 @@ echo "-----------------------"
 export RMI_IP=iode.enseeiht.fr
 export RMI_PORT=5021
 export TCP_PORT=5022
-java -jar Downloader/build/libs/Downloader.jar test3.ml
+java -jar Downloader/build/libs/Downloader.jar test.mp4
