@@ -40,4 +40,4 @@ tmux new-session -d -s iode-unsession "
 
 sleep 0.2;
 
-pkill -f tmux
+tmux kill-session -a
