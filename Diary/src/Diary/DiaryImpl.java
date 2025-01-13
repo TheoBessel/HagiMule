@@ -72,4 +72,11 @@ public class DiaryImpl extends UnicastRemoteObject implements Diary {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Sends heartbeat response
+     */
+    public Integer heartbeat() throws RemoteException {
+        return Integer.valueOf(1);
+    }
 }
