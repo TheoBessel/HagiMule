@@ -55,6 +55,11 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
     }
 
     @Override
+    public void heartbeat() throws RemoteException {
+        
+    }
+
+    @Override
     public void notifyFileDeletion(String name) throws RemoteException {
         System.out.println(name);
         // diary.removeFile(name);
