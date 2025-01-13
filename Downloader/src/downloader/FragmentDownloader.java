@@ -1,4 +1,4 @@
-package downloader;
+package Downloader;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -12,8 +12,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.rmi.RemoteException;
 
-import device.ClientInfo;
-import file.fragment.FileFragment;
+import Device.ClientInfo;
+import File.Fragment.FileFragment;
 
 public class FragmentDownloader implements Runnable {
     private FileFragment fragment;

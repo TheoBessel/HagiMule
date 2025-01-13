@@ -1,11 +1,11 @@
-package file;
+package File;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import device.ClientInfo;
+import Device.ClientInfo;
 
 public class FileInfoImpl extends UnicastRemoteObject implements FileInfo {
     private String name;

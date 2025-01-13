@@ -1,12 +1,12 @@
-package diary;
+package Diary;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import device.ClientInfoImpl;
-import file.FileInfo;
-import file.FileInfoImpl;
+import Device.ClientInfoImpl;
+import File.FileInfo;
+import File.FileInfoImpl;
 
 public class DiaryImpl extends UnicastRemoteObject implements Diary {
     /**

@@ -1,8 +1,8 @@
-package diary;
+package Diary;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import file.FileInfo;
+import File.FileInfo;
 
 /**
  * This interface represents a diary, meaning that it contains a listing of all
