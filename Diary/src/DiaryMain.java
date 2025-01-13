@@ -2,8 +2,8 @@ import java.net.Inet4Address;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 
-import diary.Diary;
-import diary.DiaryImpl;
+import Diary.Diary;
+import Diary.DiaryImpl;
 
 public class DiaryMain {
     /**
