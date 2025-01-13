@@ -1,4 +1,4 @@
-package Downloader;
+package Downloader.Fragment;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -36,7 +36,7 @@ public class FragmentDownloader implements Runnable {
 
             // Request a fragment of the file to the owner
             PrintStream out = new PrintStream(s.getOutputStream());
-            out.println("getfile:" + fragment.getName());
+            out.println("getfile:[" + fragment.getSize() + ";" + fragment.getOffset() + "]" + fragment.getName());
 
             // Reading the response
             BufferedInputStream in = new BufferedInputStream(s.getInputStream());

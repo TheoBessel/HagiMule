@@ -4,11 +4,11 @@ import Device.ClientInfo;
 
 public class FileFragment {
     private String name;
-    private Integer size;
-    private Integer offset;
+    private Long size;
+    private Long offset;
     private ClientInfo owner;
 
-    public FileFragment(String name, Integer size, Integer offset, ClientInfo owner) {
+    public FileFragment(String name, Long size, Long offset, ClientInfo owner) {
         this.name = name;
         this.size = size;
         this.offset = offset;
@@ -21,16 +21,16 @@ public class FileFragment {
     public void setName(String name) {
         this.name = name;
     }
-    public Integer getSize() {
+    public Long getSize() {
         return size;
     }
-    public void setSize(Integer size) {
+    public void setSize(Long size) {
         this.size = size;
     }
-    public Integer getOffset() {
+    public Long getOffset() {
         return offset;
     }
-    public void setOffset(Integer offset) {
+    public void setOffset(Long offset) {
         this.offset = offset;
     }
     public ClientInfo getOwner() {

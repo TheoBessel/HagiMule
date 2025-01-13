@@ -31,16 +31,21 @@ public class UploadService implements Runnable {
             LineNumberReader reader = new LineNumberReader(in);
             String request = reader.readLine();
 
+            // Request form is "getfile:[<offset;<size>]<filename>"
+
             // Check if request form is correct
 			if (request.startsWith("getfile:")) {
                 // Request form is "getfile:<filename>"
                 Path workspaceRoot = Paths.get(System.getProperty("user.dir"));
-                Path filePath = Paths.get(workspaceRoot.toString(), "/downloads", request.substring(8));
-                System.out.println("Requested file is : " + request.substring(8));
+                Long fragmentOffset = Long.parseLong(request.substring(9, request.indexOf(";")));
+                Long fragmentSize = Long.parseLong(request.substring(request.indexOf(";") + 1, request.indexOf("]")));
+                String fragmentName = request.substring(request.indexOf("]") + 1);
+                Path filePath = Paths.get(workspaceRoot.toString(), "/downloads", fragmentName);
+                System.out.println("Requested file is : " + fragmentName + " with offset " + fragmentOffset + " and size " + fragmentSize);
 
                 // Read the file into the buffer
                 FileChannel file = FileChannel.open(filePath, StandardOpenOption.READ);
-                file.read(buffer);
+                file.read(buffer, fragmentOffset);
 
                 // Write into the socker output
                 out.write(buffer.array());
