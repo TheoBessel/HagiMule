@@ -46,6 +46,7 @@ public class UploadService implements Runnable {
                 // Read the file into the buffer
                 FileChannel file = FileChannel.open(filePath, StandardOpenOption.READ);
                 file.read(buffer, fragmentOffset);
+                System.out.println("Buffer is : `" + buffer.toString() + "`");
 
                 // Write into the socker output
                 out.write(buffer.array());

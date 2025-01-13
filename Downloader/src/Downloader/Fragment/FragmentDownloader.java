@@ -36,7 +36,7 @@ public class FragmentDownloader implements Runnable {
 
             // Request a fragment of the file to the owner
             PrintStream out = new PrintStream(s.getOutputStream());
-            out.println("getfile:[" + fragment.getSize() + ";" + fragment.getOffset() + "]" + fragment.getName());
+            out.println("getfile:[" + fragment.getOffset() + ";" + fragment.getSize() + "]" + fragment.getName());
 
             // Reading the response
             BufferedInputStream in = new BufferedInputStream(s.getInputStream());
