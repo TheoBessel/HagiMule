@@ -49,9 +49,6 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
             System.err.println("Error while starting Daemon component.");
             e.printStackTrace();
         }
-
-
-
     }
 
     @Override
@@ -61,13 +58,13 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
 
     @Override
     public void notifyFileDeletion(String name) throws RemoteException {
-        System.out.println(name);
-        // diary.removeFile(name);
+        System.out.println("Removing file `" + name + "` from the diary ...");
+        this.diary.removeFile(name);
     }
 
     @Override
     public void notifyFileCreation(String name, Long size, Integer port) throws RemoteException {
-        System.out.println("Adding file `" + name + "` with size " + size + " to the diary !");
+        System.out.println("Adding file `" + name + "` with size " + size + " to the diary ...");
         this.diary.addFile(new FileInfoImpl(name, size), port);
     }
 }

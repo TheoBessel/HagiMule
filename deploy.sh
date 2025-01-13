@@ -55,7 +55,7 @@ tmux new-session -d -s iode-session "
         ./gradlew jar;
         export RMI_PORT=5021;
         java -jar Diary/build/libs/Diary.jar >> ~/hagimule_logs.txt
-    '&> logs/hagimule_logs.txt&
+    '&> ~/hagimule_logs.txt&
 ";
 
 sleep 15;
@@ -73,7 +73,7 @@ for device in "${devices[@]}"; do
             java -jar Daemon/build/libs/Daemon.jar&
             sleep 2;
             cp /work/HagiMule/downloads/test1.ml /work/HagiMule/downloads/test3.ml
-        '&> logs/hagimule_logs_$device.txt&
+        '&> ~/hagimule_logs_$device.txt&
     ";
     sleep 0.1;
 done
@@ -86,5 +86,5 @@ echo "-----------------------"
 ./gradlew jar
 export RMI_IP=iode.enseeiht.fr
 export RMI_PORT=5021
-export TCP_PORT=5021
+export TCP_PORT=5022
 java -jar Downloader/build/libs/Downloader.jar test3.ml
