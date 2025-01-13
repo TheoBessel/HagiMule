@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -46,7 +47,7 @@ public class UploadService implements Runnable {
                 // Read the file into the buffer
                 FileChannel file = FileChannel.open(filePath, StandardOpenOption.READ);
                 file.read(buffer, fragmentOffset);
-                System.out.println("Buffer is : `" + buffer.toString() + "`");
+                System.out.println("Buffer is : `" + StandardCharsets.UTF_8.decode(buffer).toString() + "`");
 
                 // Write into the socket output
                 //out.write(buffer.array());

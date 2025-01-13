@@ -70,7 +70,7 @@ for device in "${devices[@]}"; do
             export RMI_IP=iode.enseeiht.fr;
             export RMI_PORT=5021;
             export TCP_PORT=5022;
-            java -jar Daemon/build/libs/Daemon.jar&
+            java -jar Daemon/build/libs/Daemon.jar&> /work/HagiMule/hagimule_logs.txt&
             sleep 2;
             cp /work/HagiMule/downloads/test2.ml /work/HagiMule/downloads/test3.ml
         '&> ~/hagimule_logs_$device.txt&
