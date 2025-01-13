@@ -82,7 +82,6 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
         Path workspaceRoot = Paths.get(System.getProperty("user.dir"));
         Path downloadDir = Paths.get(workspaceRoot.toString(), "/downloads");
         try {
-            System.out.println("ForEach started");
             Stream<Path> files = Files.list(downloadDir);
             files.forEach(file -> {
                 try {
@@ -98,7 +97,6 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
                 }
             });
             files.close();
-            System.out.println("ForEach finished");
         } catch (IOException e) {
             System.err.println("Error while searching for 'downloads' directory");
             e.printStackTrace();
