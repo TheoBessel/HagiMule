@@ -14,6 +14,8 @@ public class DownloaderImpl implements Downloader {
     private String filename;
 
     public DownloaderImpl(String filename) {
+        this.filename = filename;
+
         try {
             String hostname = System.getenv("RMI_IP");
             String port = System.getenv("RMI_PORT");
@@ -31,6 +33,7 @@ public class DownloaderImpl implements Downloader {
 
     private FileInfo getFile(String name) throws RemoteException {
         FileInfo f = diary.getFile(name);
+        System.out.println("Name: " + name);
         System.out.println("[=============== Fichier reçu ==============]");
         System.out.println("  - Nom    : " + f.getName());
         System.out.println("  - Taille : " + f.getSize());

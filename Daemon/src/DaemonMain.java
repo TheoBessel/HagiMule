@@ -19,7 +19,10 @@ public class DaemonMain {
             Integer port = Integer.parseInt(System.getenv("TCP_PORT"));
             try (ServerSocket s = new ServerSocket(port)) {
                 while (true) {
-                    new Thread(new UploadService(s.accept())).start();
+
+                    Thread t2 = new Thread(new UploadService(s.accept()));
+
+                    t2.start();
                 }
             }
 

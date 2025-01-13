@@ -54,7 +54,7 @@ public class FragmentDownloader implements Runnable {
             // Close the socket
             s.close();
         } catch (RemoteException e) {
-            System.err.println("Error while running Downloader component.");
+            System.err.println("Error while running FragmentDownloader component.");
             e.printStackTrace();
         } catch (UnknownHostException e) {
             System.err.println("Error while trying to find the owner of a fragment.");

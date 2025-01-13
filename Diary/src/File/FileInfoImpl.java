@@ -7,6 +7,7 @@ import java.util.List;
 
 import Device.ClientInfo;
 import File.Fragment.FileFragment;
+import File.Fragment.FileFragmentImpl;
 
 public class FileInfoImpl extends UnicastRemoteObject implements FileInfo {
     private String name;
@@ -49,7 +50,7 @@ public class FileInfoImpl extends UnicastRemoteObject implements FileInfo {
         List<FileFragment> fragments = new ArrayList<>();
         for (ClientInfo owner : this.owners) {
             fragments.add(
-                new FileFragment(
+                new FileFragmentImpl(
                     this.name,
                     // Fragment size is the total size of the file divided by the number of owners
                     Long.valueOf(this.size / this.owners.size()),
