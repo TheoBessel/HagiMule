@@ -1,6 +1,6 @@
-package file.fragment;
+package File.Fragment;
 
-import device.ClientInfo;
+import Device.ClientInfo;
 
 public class FileFragment {
     private String name;

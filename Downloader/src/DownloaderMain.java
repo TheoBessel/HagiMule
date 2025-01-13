@@ -1,11 +1,11 @@
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 
-import device.ClientInfo;
-import diary.Diary;
-import downloader.FragmentDownloader;
-import file.FileInfo;
-import file.fragment.FileFragment;
+import Device.ClientInfo;
+import Diary.Diary;
+import Downloader.FragmentDownloader;
+import File.FileInfo;
+import File.Fragment.FileFragment;
 
 public class DownloaderMain {
     public static void main(String[] args) {

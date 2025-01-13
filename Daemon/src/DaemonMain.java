@@ -5,7 +5,7 @@ import java.rmi.RemoteException;
 import Daemon.Daemon;
 import Daemon.DaemonImpl;
 import DirectoryWatcher.DirectoryWatcher;
-import FragmentDownloader.FragmentDownloader;
+import UploadService.UploadService;
 
 public class DaemonMain {
     public static void main(String[] args) {
@@ -19,7 +19,7 @@ public class DaemonMain {
             Integer port = Integer.parseInt(System.getenv("TCP_PORT"));
             try (ServerSocket s = new ServerSocket(port)) {
                 while (true) {
-                    new Thread(new FragmentDownloader(s.accept())).start();
+                    new Thread(new UploadService(s.accept())).start();
                 }
             }
 

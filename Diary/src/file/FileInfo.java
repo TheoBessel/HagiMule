@@ -1,10 +1,10 @@
-package file;
+package File;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import device.ClientInfo;
+import Device.ClientInfo;
 
 /**
  * The File interface reprensents the essential informations the client needs to

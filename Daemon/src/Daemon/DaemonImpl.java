@@ -8,8 +8,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.stream.Stream;
 
-import diary.Diary;
-import file.FileInfoImpl;
+import Diary.Diary;
+import File.FileInfoImpl;
 
 public class DaemonImpl extends UnicastRemoteObject implements Daemon {
 

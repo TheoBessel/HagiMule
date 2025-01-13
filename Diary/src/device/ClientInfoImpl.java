@@ -1,4 +1,4 @@
-package device;
+package Device;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;

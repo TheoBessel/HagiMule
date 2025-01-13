@@ -1,4 +1,4 @@
-package device;
+package Device;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
