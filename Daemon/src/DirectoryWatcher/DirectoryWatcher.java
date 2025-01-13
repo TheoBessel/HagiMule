@@ -21,7 +21,6 @@ public class DirectoryWatcher implements Runnable {
 
     @Override
     public void run() {
-        boolean disconnected = false;
         try {
             // Watcher creation
             WatchService watcher = FileSystems.getDefault().newWatchService();

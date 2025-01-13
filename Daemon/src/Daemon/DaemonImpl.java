@@ -57,10 +57,6 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
         catch (RemoteException e) {
             return Integer.valueOf(0);
         }
-        // catch (Exception e) {
-        //     System.err.println("Error while reconnecting to diary");
-        //     e.printStackTrace();
-        // }
         return Integer.valueOf(1);
     }
 
