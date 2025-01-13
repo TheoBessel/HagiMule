@@ -48,18 +48,25 @@ public class FileInfoImpl extends UnicastRemoteObject implements FileInfo {
     @Override
     public List<FileFragment> fragmentFile() throws RemoteException {
         List<FileFragment> fragments = new ArrayList<>();
-        for (ClientInfo owner : this.owners) {
+        long fragmentSize = this.size / this.owners.size(); // Taille de base pour chaque fragment
+        long remainder = this.size % this.owners.size();    // Reste à attribuer au dernier fragment
+
+        for (int i = 0; i < this.owners.size(); i++) {
+            long offset = i * fragmentSize;
+            long currentFragmentSize = (i == this.owners.size() - 1) 
+                ? fragmentSize + remainder  // Ajoute le reste au dernier fragment
+                : fragmentSize;
+
             fragments.add(
                 new FileFragmentImpl(
                     this.name,
-                    // Fragment size is the total size of the file divided by the number of owners
-                    Long.valueOf(this.size / this.owners.size()),
-                    // Fragment offset is the index of the owner in the list of owners multiplied by the fragment size
-                    Long.valueOf(this.owners.indexOf(owner) * (this.size / this.owners.size())),
-                    owner
+                    currentFragmentSize,
+                    offset,
+                    this.owners.get(i)
                 )
             );
         }
+
         return fragments;
     }
 }

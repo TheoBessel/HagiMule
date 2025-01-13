@@ -49,6 +49,7 @@ public class DownloaderImpl implements Downloader {
     public void run() {
         try {
             FileInfo file = getFile(filename);
+            System.out.println(file.fragmentFile().size() + " fragments to download.");
             for (FileFragment fragment : file.fragmentFile()) {
                 new Thread(new FragmentDownloader(fragment)).start();
             }
