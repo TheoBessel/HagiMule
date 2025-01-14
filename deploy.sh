@@ -4,17 +4,17 @@ devices=(
     "beatles"
     "clapton"
     "clash"
-    # "cooper"
-    # "deeppurple"
-    # "doors"
-    # "dylan"
-    # "eagles"
+    "cooper"
+    "deeppurple"
+    "doors"
+    "dylan"
+    "eagles"
 )
 
 # Setup Diary
 echo "Launching Diary  iode.enseeiht.fr ..."
 tmux new-session -d -s iode-session "
-    ssh -o StrictHostKeyChecking=no tbl3216@iode.enseeiht.fr '
+    ssh -o StrictHostKeyChecking=no $USER_ID@iode.enseeiht.fr '
         git clone https://github.com/TheoBessel/HagiMule.git --branch main ~/HagiMule;
         cd ~/HagiMule;
         curl https://upload.wikimedia.org/wikipedia/commons/a/aa/%22Das_Lagerregal_Gottes%22_-_Menger_Mod_1_OpenCL_12K_HQ_20200517.png -o downloads/test_image.png;
@@ -30,7 +30,7 @@ sleep 60;
 for device in "${devices[@]}"; do
     echo "Launching Client" $device "..."
     tmux new-session -d -s $device-session "
-        ssh -o StrictHostKeyChecking=no tbl3216@$device.enseeiht.fr '
+        ssh -o StrictHostKeyChecking=no $USER_ID@$device.enseeiht.fr '
             cp -r ~/HagiMule /work/HagiMule;
             cd /work/HagiMule;
             export RMI_IP=iode.enseeiht.fr;

@@ -17,7 +17,7 @@ devices=(
 for device in "${devices[@]}"; do
     echo "Stopping Client" $device "..."
     tmux new-session -d -s $device-unsession "
-        ssh -o StrictHostKeyChecking=no tbl3216@$device.enseeiht.fr '
+        ssh -o StrictHostKeyChecking=no $USER_ID@$device.enseeiht.fr '
             killall nohup;
             killall java;
             rm -rf /work/HagiMule;
@@ -30,7 +30,7 @@ done
 # Stop Diary
 echo "Stopping Diary ..."
 tmux new-session -d -s iode-unsession "
-    ssh -o StrictHostKeyChecking=no tbl3216@iode.enseeiht.fr '
+    ssh -o StrictHostKeyChecking=no $USER_ID@iode.enseeiht.fr '
         killall nohup;
         killall java;
         rm -rf ~/HagiMule;
