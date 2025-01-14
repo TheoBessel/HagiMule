@@ -17,7 +17,6 @@ public class UploadService implements Runnable {
 
     public UploadService(Socket s) {
         this.s = s;
-        this.buffer = ByteBuffer.allocate(2048);
     }
 
     @Override
@@ -45,6 +44,7 @@ public class UploadService implements Runnable {
 
                 // Read the file into the buffer
                 FileChannel file = FileChannel.open(filePath, StandardOpenOption.READ);
+                buffer = ByteBuffer.allocate(fragmentSize.intValue());
                 file.read(buffer, 0);
                 System.out.println("Buffer is : `" + new String(buffer.array(), "ASCII") + "`");
 
