@@ -1,12 +1,24 @@
 # Projet HagiMule
 
+**Théo Bessel & Nell Truong**
+
 Ce projet a pour but d'implanter une architecture de téléchargement parallèle de grands fichiers.
 
 Il a été réalisé dans le cadre du cours d'intergiciel et données réparties donné en deuxième année à l'N7.
 
 ## Installation
 
-Via gradle : TODO
+Via gradle :
+
+Lancer la commande suivante pour compiler le projet:
+```bash
+gradle build
+```
+
+ou pour le compiler sous forme d'archives Java:
+```bash
+gradle jar
+```
 
 ## Architecture globale
 
@@ -58,3 +70,95 @@ De même, pour le téléchargement des fichiers, ceux-ci sont téléchargés par
 #### 3 / `ClientInfo` /
 
 Les clients sont eux représentés par un un `ClientInfo` et possède une adresse et un port.
+
+## Evaluation des performances
+
+Pour évaluer les performances de notre modèle de peer to peer nous avons mis en place un script de déploiement utilisant les machines de l'N7.
+
+Nous avons décidé de garder le débit réseau intact (en ne créant donc pas un ralentissement artificiel) et nous avons donc décidé de ne pas mesurer le temps d'exécution du téléchargement mais une autre grandeur plus pertinente dans le cas d'un très bon réseau comme celui de l'école.
+
+Nous avons alors mesuré (grâce à la commande netstat) le nombre d'octets envoyés par l'interface réseau d'un des peers, au peer qui effectue un téléchargement. Nous avons fait ces mesures au cours du temps de téléchargement et en faisant varier le nombre de peers pour obtenir les trois courbes suivantes :
+
+<!-- TODO <insérer image> -->
+
+Les mesures ont été faites sur le transfert d'une image tirée de Wikipédia, pesant approximativement 400Mo et pour 1, 5 et 10 peers. (1 peer correspondant à un téléchargement n'étant pas parallèle qui servira donc de référence)
+
+On constate alors deux choses :
+- Lorsque l'on utilise plusieurs peers, on obtient de meilleures performances qu'en téléchargement monothreadé; jusqu'à environ deux fois plus rapide pour 5 peers dans notre cas.
+- À partir d'un certain nombre de peers, cette méthode perds en efficacité, cela est probablement dû à une saturation de la carte réseau de la machine qui télécharge le fichier, amplifiant alors le nombre de requêtes TCP en timeout et donc le nombre de paquets envoyés à nouveau à cause de ce timeout.
+
+On peut donc conclure en disant que le peer to peer est une excellente méthode dans le cas où on a un client voulant télécharger un fichier présent sur plusieurs machines ayant un bien moins bon réseau en upload que lui en download. On mets alors à profis la parallélisation de ces peers pour se rapprocher de la capacité maximale de download de la machine effectuant le téléchargement
+
+## Utilisation
+
+Pour utiliser le projet, trois manières sont possibles:
+
+### Lancement avec un .jar
+
+Compiler le projet avec Gradle :
+```
+gradle jar
+```
+Note : ceci peut aussi être fait avec le wrapper Gradle `./gradlew jar` et chaque composant peut être individuellement compilé, par exemple `gradle Diary:jar` compile le Diary.
+
+#### Lancement du diary
+
+Sur la machine hébergeant le diary, choisir le port pour la connection RMI:
+```bash
+export RMI_PORT=<port>
+```
+Où `<port>` est à remplacer par le port à utiliser.
+
+On peut lancer le diary avec la commande:
+```bash
+java -jar Diary/build/libs/Diary.jar
+```
+
+#### Lancement d'un client
+
+Renseigner l'adresse du diary, son port et le port TCP à utiliser:
+```bash
+export RMI_IP=<adress>
+export RMI_PORT=<port1>
+export TCP_PORT=<port2>
+```
+
+On peut par exemple remplacer `<adress>` par `iode.enseeiht.fr`, `<port1>` par `5021` et `<port2>` par `5022`. Attention, il faut bien penser à mettre le même port RMI que sur la machine hébergeant le diary.
+
+On lance le Daemon du Client:
+```bash
+java -jar Daemon/build/libs/Daemon.jar
+```
+
+### Lancement d'un téléchargement
+
+Renseigner l'adresse du diary et les ports à utiliser (identique au client).
+```bash
+export RMI_IP=<adress>
+export RMI_PORT=<port1>
+export TCP_PORT=<port2>
+```
+
+Lancer un téléchargement :
+```bash
+java -jar Downloader/build/libs/Downloader.jar <fichier>
+```
+En prenant soin de remplacer `<fichier>` par le nom du fichier souhaité.
+
+### Lancement avec gradle
+
+Pour le lancement avec gradle, il suffit de réaliser les mêmes étapes qu'avec les .jar, mais en lançant le Diary/Client/Download avec gradle au lieu de java.<br>
+Cela peut se faire avec les commandes:
+```bash
+gradle Diary:run
+```
+```bash
+gradle Daemon:run
+```
+```bash
+gradle Downloader:run --args='<fichier>':run
+```
+où `<fichier>` est à remplacer par le nom du fichier voulu.
+
+### Script `deploy.sh`
+Le script `deploy.sh` est un script qui permet d'automatiquement lancer le scénario de démonstration.
