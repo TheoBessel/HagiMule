@@ -162,4 +162,6 @@ Il lance un diary sur la machine iode.enseeiht.fr et  des daemon sur une liste d
 
 On peut alors se connecter en ssh aux clients, visualiser les logs dans /work/HagiMule/hagimule_logs.txt et accéder au dossier contenant les fichiers téléchargés et à transmettre dans /work/HagiMule/downloads.
 
-Pour éteindre le diary et tous les daemon on peut utiliser le script undeploy.sh. Pour quitter une des machines de manière indépendante il suffit de kill le process associé donc on s'en sort en faisant par exemple un killall java si c'est le seul processus java que l'on a lancé sur la machine ou en utilisant ps -ef | grep java et en killant le process manuellement en utilisant son PID (kill -9 \<PID>).
+Pour éteindre le diary et tous les daemon on peut utiliser le script `undeploy.sh`. Pour quitter une des machines de manière indépendante il suffit de kill le process associé donc on s'en sort en faisant par exemple un killall java si c'est le seul processus java que l'on a lancé sur la machine ou en utilisant ps -ef | grep java et en killant le process manuellement en utilisant son PID (kill -9 \<PID>).
+
+En cas d'erreur lors d'un deploy.sh comme Cannot access to jar ... (visible dans les logs) il se peut que le script undeploy.sh n'ait pas bien nettoyé les sessions lancées, il ne faut alors pas hésiter à relancer undeploy.sh afin de s'assurer que le projet soit bien nettoyé avant de relancer un déploiement.
