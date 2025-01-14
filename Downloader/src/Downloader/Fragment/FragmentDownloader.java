@@ -17,11 +17,10 @@ import File.Fragment.FileFragment;
 
 public class FragmentDownloader implements Runnable {
     private FileFragment fragment;
-    private ByteBuffer buffer;
+    private Socket s;
 
     public FragmentDownloader(FileFragment fragment) {
         this.fragment = fragment;
-        this.buffer = ByteBuffer.allocate(2048);
     }
 
     @Override
@@ -32,7 +31,7 @@ public class FragmentDownloader implements Runnable {
 
             // Connecting to the owner socket
             System.out.println("Opening new socket for host : " + owner.getAddress() + ":" + owner.getPort());
-            Socket s = new Socket(owner.getAddress(), owner.getPort());
+            s = new Socket(owner.getAddress(), owner.getPort());
 
             // Request a fragment of the file to the owner
             PrintStream out = new PrintStream(s.getOutputStream());
@@ -40,20 +39,46 @@ public class FragmentDownloader implements Runnable {
 
             // Reading the response
             BufferedInputStream in = new BufferedInputStream(s.getInputStream());
-            buffer = ByteBuffer.wrap(in.readAllBytes());
 
-            // Create the file associated to the response
+            // Prepare to write to the file
             Path workspaceRoot = Paths.get(System.getProperty("user.dir"));
             Path downloadDir = Paths.get(workspaceRoot.toString(), "/downloads");
             Path filePath = Paths.get(downloadDir.toString(), fragment.getName());
 
-            System.out.println("Buffer is : `" + new String(buffer.array(), "ASCII") + "`");
+            // Ensure the download directory exists
+            if (!downloadDir.toFile().exists()) {
+                downloadDir.toFile().mkdirs();
+            }
 
-            // Write the content of the buffer into the file at the good offset
             FileChannel file = FileChannel.open(filePath, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
-            file.write(buffer, fragment.getOffset());
 
-            // Close the socket
+            // Buffer size for each chunk
+            int bufferSize = 4096; // Example: 4 KB
+            byte[] chunk = new byte[bufferSize];
+            long remainingSize = fragment.getSize();
+            long fileOffset = fragment.getOffset();
+
+            while (remainingSize > 0) {
+                // Read a chunk of data
+                int bytesRead = in.read(chunk, 0, (int) Math.min(bufferSize, remainingSize));
+                if (bytesRead == -1) {
+                    throw new IOException("Unexpected end of stream while downloading fragment.");
+                }
+
+                // Write the chunk into the file at the correct position
+                ByteBuffer buffer = ByteBuffer.wrap(chunk, 0, bytesRead);
+                file.write(buffer, fileOffset);
+
+                // Update the remaining size and file offset
+                remainingSize -= bytesRead;
+                fileOffset += bytesRead;
+            }
+
+            System.out.println("Download complete for fragment: " + fragment.getName());
+
+            // Close resources
+            file.close();
+            in.close();
             s.close();
         } catch (RemoteException e) {
             System.err.println("Error while running FragmentDownloader component.");
@@ -65,7 +90,5 @@ public class FragmentDownloader implements Runnable {
             System.err.println("Error while trying to communicate with a daemon.");
             e.printStackTrace();
         }
-
     }
-
 }
