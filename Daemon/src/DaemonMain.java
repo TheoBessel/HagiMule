@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.rmi.RemoteException;
 
 import Daemon.Daemon;
 import Daemon.DaemonImpl;

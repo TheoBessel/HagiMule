@@ -2,6 +2,8 @@ import java.net.Inet4Address;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 
+import AliveClientsService.AliveClientsService;
+import Device.ClientInfoImpl;
 import Diary.Diary;
 import Diary.DiaryImpl;
 
@@ -14,6 +16,7 @@ public class DiaryMain {
         try {
             System.setProperty("java.rmi.server.hostname", Inet4Address.getLocalHost().getHostAddress());
             Diary diary = new DiaryImpl();
+            new Thread(new AliveClientsService(diary)).start();
             String port = System.getenv("RMI_PORT");
             LocateRegistry.createRegistry(Integer.parseInt(port));
             Naming.rebind("//localhost:" + port + "/Diary", diary);

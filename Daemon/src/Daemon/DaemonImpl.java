@@ -38,10 +38,10 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
     @Override
     public Integer heartbeat() throws RemoteException {
         String hostname = System.getenv("RMI_IP");
-        String port = System.getenv("RMI_PORT");
+        Integer port =  Integer.parseInt(System.getenv("RMI_PORT"));
         try {
             try {
-                this.diary = (Diary) Naming.lookup("//" + hostname + ":" + port + "/Diary");
+                this.diary = (Diary) Naming.lookup("//" + hostname + ":" + port.toString() + "/Diary");
             }
             catch (Exception e) {
                 System.err.println("Reconnecting...");
@@ -51,7 +51,7 @@ public class DaemonImpl extends UnicastRemoteObject implements Daemon {
                     System.err.println(e1);
                 }
             }
-            this.diary.heartbeat();
+            this.diary.heartbeat(port);
         }
         // If the Diary has disconnected
         catch (RemoteException e) {

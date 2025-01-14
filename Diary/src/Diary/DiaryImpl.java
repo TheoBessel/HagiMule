@@ -1,9 +1,13 @@
 package Diary;
 import java.rmi.RemoteException;
+import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.LocalTime;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
+import Device.ClientInfo;
 import Device.ClientInfoImpl;
 import File.FileInfo;
 import File.FileInfoImpl;
@@ -15,10 +19,16 @@ public class DiaryImpl extends UnicastRemoteObject implements Diary {
     private Map<String, FileInfo> files;
 
     /**
+     * @param clientLastAliveTime The last time each client was seen alive by the diary
+     */
+    private Map<String, LocalTime> clientLastAliveTime;
+
+    /**
      * Constructor for Diary component.
      */
     public DiaryImpl() throws RemoteException {
         this.files = new LinkedHashMap<>();
+        this.clientLastAliveTime = new LinkedHashMap<>();
     }
 
     /**
@@ -26,6 +36,14 @@ public class DiaryImpl extends UnicastRemoteObject implements Diary {
      */
     public FileInfo getFile(String name) throws RemoteException {
         return this.files.get(name);
+    }
+
+    /**
+     * Get the map of clients last alive times
+     * @return
+     */
+    public Map<String, LocalTime> getClientsLastAliveTimes() throws RemoteException {
+        return this.clientLastAliveTime;
     }
 
     /**
@@ -73,10 +91,53 @@ public class DiaryImpl extends UnicastRemoteObject implements Diary {
         }
     }
 
+    public void removeClient(ClientInfo owner) {
+        files.forEach((key, value) -> {
+            System.out.println(key);
+            try {
+                value.removeOwner(owner);
+                List<ClientInfo> l = value.getOwners();
+                for (ClientInfo c : l) {
+                    System.out.println(c.getAddress());
+                }
+                System.out.println(l.size());
+                clientLastAliveTime.remove(owner.getAddress() + ":" + owner.getPort().toString());
+            } catch (RemoteException e) {
+                System.err.println("Error couldn't access FileInfo");
+                e.printStackTrace();
+            }
+        clientLastAliveTime.forEach((keyy, val) -> System.out.println(key));
+        System.out.println("finished");
+        files.forEach((keyy, val) -> {System.out.println(key);
+            try {
+                val.getOwners().forEach((lll) -> {
+                    try {
+                        System.out.println(lll.getAddress());
+                    } catch (RemoteException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                });
+            } catch (RemoteException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        });
+        System.out.println("finiiiished");
+        });
+    }
+
     /**
      * Sends heartbeat response
      */
-    public Integer heartbeat() throws RemoteException {
+    public Integer heartbeat(Integer port) throws RemoteException {
+        try {
+            clientLastAliveTime.put(getClientHost() + ":" + port.toString(), LocalTime.now());
+        }
+        catch (ServerNotActiveException e) {
+            System.err.println("Error no remote method invocation is being processed.");
+            e.printStackTrace();
+        }
         return Integer.valueOf(1);
     }
 }
