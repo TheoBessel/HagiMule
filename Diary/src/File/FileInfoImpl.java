@@ -40,6 +40,16 @@ public class FileInfoImpl extends UnicastRemoteObject implements FileInfo {
 
     @Override
     public void removeOwner(ClientInfo owner) throws RemoteException {
-        this.owners.remove(owner);
+        // this.owners.remove(owner);
+        List<ClientInfo> tmp = new ArrayList<>();
+        for (ClientInfo c : this.owners) {
+            if (!owner.equals(c)) {
+                tmp.add(c);
+            }
+        }
+        this.owners = tmp;
+        for (ClientInfo c : this.owners) {
+            System.out.println(c.getAddress());
+        }
     }
 }

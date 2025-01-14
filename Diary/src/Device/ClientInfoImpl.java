@@ -24,6 +24,6 @@ public class ClientInfoImpl extends UnicastRemoteObject implements ClientInfo {
 
     @Override
     public boolean equals(ClientInfo client) throws RemoteException {
-        return this.address.equals(client.getAddress()) && this.port == client.getPort();
+        return this.address.equals(client.getAddress());
     }
 }

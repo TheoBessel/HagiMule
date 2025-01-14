@@ -93,37 +93,30 @@ public class DiaryImpl extends UnicastRemoteObject implements Diary {
 
     public void removeClient(ClientInfo owner) {
         files.forEach((key, value) -> {
-            System.out.println(key);
             try {
-                value.removeOwner(owner);
-                List<ClientInfo> l = value.getOwners();
-                for (ClientInfo c : l) {
-                    System.out.println(c.getAddress());
+
+                try {
+                    FileInfo updatedFile = this.files.get(key);
+                    if (updatedFile != null) {
+                        updatedFile.removeOwner(new ClientInfoImpl(owner.getAddress(), owner.getPort()));
+                        this.files.put(
+                            updatedFile.getName(),
+                            updatedFile
+                        );
+
+                        System.out.println("File `" + updatedFile.getName() + "` from client " + owner.getAddress() + " successfully removed from the diary !");
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error while removing file from the Diary : unknown host.");
+                    e.printStackTrace();
                 }
-                System.out.println(l.size());
+
                 clientLastAliveTime.remove(owner.getAddress() + ":" + owner.getPort().toString());
+
             } catch (RemoteException e) {
                 System.err.println("Error couldn't access FileInfo");
                 e.printStackTrace();
             }
-        clientLastAliveTime.forEach((keyy, val) -> System.out.println(key));
-        System.out.println("finished");
-        files.forEach((keyy, val) -> {System.out.println(key);
-            try {
-                val.getOwners().forEach((lll) -> {
-                    try {
-                        System.out.println(lll.getAddress());
-                    } catch (RemoteException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                });
-            } catch (RemoteException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        });
-        System.out.println("finiiiished");
         });
     }
 

@@ -33,29 +33,12 @@ public class AliveClientsService implements Runnable {
                 map.forEach((key, value) ->
                     {
                         long diff = Duration.between(value, t).toMillis();
-                        // System.out.println(key);
-                        // System.out.println(diff >= 2);
                         if (diff >= 2000) {
-                            // System.out.println("Client deco !!");
-                        //     // delete client from list
-                        //     // String[] parts = key.split(":");
-                        //     // String host = parts[0];
-                        //     // String port = parts[1];
                             keysToRemove.add(key);
-                        //     // try {
-                        //     //     diary.removeClient(new ClientInfoImpl(host, Integer.parseInt(port)));
-                        //     // } catch (NumberFormatException e) {
-                        //     //     System.err.println("Error unparsable port");
-                        //     //     e.printStackTrace();
-                        //     // } catch (RemoteException e) {
-                        //     //     System.err.println("Error couldn't remove owner");
-                        //     //     e.printStackTrace();
-                        //     // }
                         }
                     }
                     );
                     for (String key : keysToRemove) {
-                    // System.out.println(key);
                     String[] parts = key.split(":");
                     String host = parts[0];
                     String port = parts[1];
