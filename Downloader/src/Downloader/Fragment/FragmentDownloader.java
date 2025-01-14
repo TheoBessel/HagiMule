@@ -79,7 +79,7 @@ public class FragmentDownloader implements Runnable {
                 fileOffset += bytesRead;
             }
 
-            System.out.println("Download complete for fragment: " + fragment.getName());
+            System.out.println("Download complete for fragment: " + fragment.getName() + " with offset " + fragment.getOffset() + " and size " + fragment.getSize());
 
             // Close resources
             file.close();

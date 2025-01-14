@@ -3,7 +3,6 @@ import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 
 import AliveClientsService.AliveClientsService;
-import Device.ClientInfoImpl;
 import Diary.Diary;
 import Diary.DiaryImpl;
 

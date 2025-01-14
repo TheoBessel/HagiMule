@@ -1,5 +1,4 @@
 package Diary;
-import java.io.File;
 import java.rmi.RemoteException;
 import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
