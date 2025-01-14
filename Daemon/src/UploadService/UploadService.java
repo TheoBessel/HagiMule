@@ -63,6 +63,7 @@ public class UploadService implements Runnable {
                     }
 
                     buffer.flip(); // Prepare the buffer for writing
+                    System.out.println("Buffer is : `" + new String(buffer.array(), "ASCII") + "`");
                     out.write(buffer.array(), 0, bytesRead);
                     remainingSize -= bytesRead;
                 }
