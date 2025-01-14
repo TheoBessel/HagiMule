@@ -1,14 +1,14 @@
 devices=(
     "acdc"
-    # "aerosmith"
-    # "beatles"
-    # "clapton"
-    # "clash"
-    # "cooper"
-    # "deeppurple"
-    # "doors"
-    # "dylan"
-    # "eagles"
+    "aerosmith"
+    "beatles"
+    "clapton"
+    "clash"
+    "cooper"
+    "deeppurple"
+    "doors"
+    "dylan"
+    "eagles"
 
     #"epica"
     #"hendrix"
@@ -27,7 +27,7 @@ tmux new-session -d -s iode-session "
     '&> ~/hagimule_logs.txt&
 ";
 
-sleep 60;
+sleep 30;
 
 # Setup Clients
 for device in "${devices[@]}"; do
@@ -48,7 +48,7 @@ for device in "${devices[@]}"; do
     sleep 0.1;
 done
 
-sleep 60;
+sleep 30;
 
 echo "-----------------------"
 

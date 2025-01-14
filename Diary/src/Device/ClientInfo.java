@@ -19,4 +19,6 @@ public interface ClientInfo extends Remote {
      * @return The port of the client
      */
     public Integer getPort() throws RemoteException;
+
+    public boolean equals(ClientInfo client) throws RemoteException;
 }
