@@ -10,12 +10,7 @@ Il a été réalisé dans le cadre du cours d'intergiciel et données réparties
 
 Via gradle :
 
-Lancer la commande suivante pour compiler le projet:
-```bash
-gradle build
-```
-
-ou pour le compiler sous forme d'archives Java:
+Lancer la commande suivante pour compiler le projet sous forme d'archives Java :
 ```bash
 gradle jar
 ```
@@ -162,3 +157,9 @@ où `<fichier>` est à remplacer par le nom du fichier voulu.
 
 ### Script `deploy.sh`
 Le script `deploy.sh` est un script qui permet d'automatiquement lancer le scénario de démonstration.
+
+Il lance un diary sur la machine iode.enseeiht.fr et  des daemon sur une liste de machines déclarée au début du fichier. Pour pouvoir se connecter en ssh il faut set la variable d'environnement $USER_ID en renseignant son id de l'école (par exemple export USER_ID = tbl3216).
+
+On peut alors se connecter en ssh aux clients, visualiser les logs dans /work/HagiMule/hagimule_logs.txt et accéder au dossier contenant les fichiers téléchargés et à transmettre dans /work/HagiMule/downloads.
+
+Pour éteindre le diary et tous les daemon on peut utiliser le script undeploy.sh. Pour quitter une des machines de manière indépendante il suffit de kill le process associé donc on s'en sort en faisant par exemple un killall java si c'est le seul processus java que l'on a lancé sur la machine ou en utilisant ps -ef | grep java et en killant le process manuellement en utilisant son PID (kill -9 \<PID>).
