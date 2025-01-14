@@ -68,8 +68,8 @@ public class FragmentDownloader implements Runnable {
                     throw new IOException("Unexpected end of stream while downloading fragment.");
                 }
 
-                // Update the buffer's position and limit for writing
-                buffer.limit(bytesRead);
+                // Prepare the buffer for writing by flipping it
+                buffer.limit(bytesRead).position(0);
 
                 // Write the buffer's content to the file at the correct position
                 file.write(buffer, fileOffset);

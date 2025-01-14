@@ -53,7 +53,7 @@ public class FileInfoImpl extends UnicastRemoteObject implements FileInfo {
 
         for (int i = 0; i < this.owners.size(); i++) {
             long offset = i * fragmentSize;
-            long currentFragmentSize = (i == this.owners.size() - 1) 
+            long currentFragmentSize = (i == this.owners.size() - 1)
                 ? fragmentSize + remainder  // Ajoute le reste au dernier fragment
                 : fragmentSize;
 
