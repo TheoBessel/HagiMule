@@ -54,22 +54,27 @@ public class FragmentDownloader implements Runnable {
 
             // Buffer size for each chunk
             int bufferSize = 4096; // Example: 4 KB
-            byte[] chunk = new byte[bufferSize];
+            ByteBuffer buffer = ByteBuffer.allocate(bufferSize);
             long remainingSize = fragment.getSize();
             long fileOffset = fragment.getOffset();
 
             while (remainingSize > 0) {
-                // Read a chunk of data
-                int bytesRead = in.read(chunk, 0, (int) Math.min(bufferSize, remainingSize));
+                // Clear the buffer for a new read operation
+                buffer.clear();
+
+                // Read data into the buffer
+                int bytesRead = in.read(buffer.array(), 0, (int) Math.min(buffer.capacity(), remainingSize));
                 if (bytesRead == -1) {
                     throw new IOException("Unexpected end of stream while downloading fragment.");
                 }
 
-                // Write the chunk into the file at the correct position
-                ByteBuffer buffer = ByteBuffer.wrap(chunk, 0, bytesRead);
+                // Update the buffer's position and limit for writing
+                buffer.limit(bytesRead);
+
+                // Write the buffer's content to the file at the correct position
                 file.write(buffer, fileOffset);
 
-                // Update the remaining size and file offset
+                // Update remaining size and file offset
                 remainingSize -= bytesRead;
                 fileOffset += bytesRead;
             }
