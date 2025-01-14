@@ -1,0 +1,62 @@
+1 peer :
+tcp6       0 2253008 acdc.enseeiht.fr:5022   172.22.221.243:55951    ESTABLISHED
+tcp6       0 2461760 acdc.enseeiht.fr:5022   172.22.221.243:55951    ESTABLISHED
+tcp6       0 4084808 acdc.enseeiht.fr:5022   172.22.221.243:55951    ESTABLISHED
+tcp6       0 3026320 acdc.enseeiht.fr:5022   172.22.221.243:55951    ESTABLISHED
+tcp6       0 2875728 acdc.enseeiht.fr:5022   172.22.221.243:55951    ESTABLISHED
+tcp6       0 3632456 acdc.enseeiht.fr:5022   172.22.221.243:55951    ESTABLISHED
+tcp6       0 2809120 acdc.enseeiht.fr:5022   172.22.221.243:55951    ESTABLISHED
+tcp6       0 3191392 acdc.enseeiht.fr:5022   172.22.221.243:55951    ESTABLISHED
+tcp6       0 3137816 acdc.enseeiht.fr:5022   172.22.221.243:55951    ESTABLISHED
+tcp6       0 2376096 acdc.enseeiht.fr:5022   172.22.221.243:55951    ESTABLISHED
+tcp6       0 3195344 acdc.enseeiht.fr:5022   172.22.221.243:55951    ESTABLISHED
+tcp6       0 3520088 acdc.enseeiht.fr:5022   172.22.221.243:55951    ESTABLISHED
+tcp6       0 3249184 acdc.enseeiht.fr:5022   172.22.221.243:55951    ESTABLISHED
+tcp6       0 1769120 acdc.enseeiht.fr:5022   172.22.221.243:55951    ESTABLISHED
+tcp6       0 4142728 acdc.enseeiht.fr:5022   172.22.221.243:55951    ESTABLISHED
+tcp6       0  215948 acdc.enseeiht.fr:5022   172.22.221.243:55951    FIN_WAIT1
+tcp6       0       0 acdc.enseeiht.fr:5022   172.22.221.243:55951    TIME_WAIT
+tcp6       0       0 acdc.enseeiht.fr:5022   172.22.221.243:55951    TIME_WAIT
+tcp6       0       0 acdc.enseeiht.fr:5022   172.22.221.243:55951    TIME_WAIT
+
+5 peer :
+tcp6       0 1136400 acdc.enseeiht.fr:5022   172.22.221.243:55492    ESTABLISHED
+tcp6       0 1074368 acdc.enseeiht.fr:5022   172.22.221.243:55492    ESTABLISHED
+tcp6       0 1306136 acdc.enseeiht.fr:5022   172.22.221.243:55492    ESTABLISHED
+tcp6       0 1251352 acdc.enseeiht.fr:5022   172.22.221.243:55492    ESTABLISHED
+tcp6       0  988984 acdc.enseeiht.fr:5022   172.22.221.243:55492    ESTABLISHED
+tcp6       0 1217768 acdc.enseeiht.fr:5022   172.22.221.243:55492    ESTABLISHED
+tcp6       0 1273576 acdc.enseeiht.fr:5022   172.22.221.243:55492    ESTABLISHED
+tcp6       0 1408904 acdc.enseeiht.fr:5022   172.22.221.243:55492    ESTABLISHED
+tcp6       0 1220664 acdc.enseeiht.fr:5022   172.22.221.243:55492    ESTABLISHED
+tcp6       0 1449448 acdc.enseeiht.fr:5022   172.22.221.243:55492    ESTABLISHED
+tcp6       0 1377160 acdc.enseeiht.fr:5022   172.22.221.243:55492    ESTABLISHED
+tcp6       0 1408904 acdc.enseeiht.fr:5022   172.22.221.243:55492    ESTABLISHED
+tcp6       0 1119304 acdc.enseeiht.fr:5022   172.22.221.243:55492    ESTABLISHED
+tcp6       0 1014752 acdc.enseeiht.fr:5022   172.22.221.243:55492    ESTABLISHED
+tcp6       0  386564 acdc.enseeiht.fr:5022   172.22.221.243:55492    FIN_WAIT1
+tcp6       0       0 acdc.enseeiht.fr:5022   172.22.221.243:55492    TIME_WAIT
+tcp6       0       0 acdc.enseeiht.fr:5022   172.22.221.243:55492    TIME_WAIT
+tcp6       0       0 acdc.enseeiht.fr:5022   172.22.221.243:55492    TIME_WAIT
+tcp6       0       0 acdc.enseeiht.fr:5022   172.22.221.243:55492    TIME_WAIT
+
+10 peer :
+tcp6       0 1863576 acdc.enseeiht.fr:5022   172.22.221.243:55809    ESTABLISHED
+tcp6       0 1694160 acdc.enseeiht.fr:5022   172.22.221.243:55809    ESTABLISHED
+tcp6       0 1737056 acdc.enseeiht.fr:5022   172.22.221.243:55809    ESTABLISHED
+tcp6       0 1723120 acdc.enseeiht.fr:5022   172.22.221.243:55809    ESTABLISHED
+tcp6       0 2014168 acdc.enseeiht.fr:5022   172.22.221.243:55809    ESTABLISHED
+tcp6       0 1685472 acdc.enseeiht.fr:5022   172.22.221.243:55809    ESTABLISHED
+tcp6       0 2093808 acdc.enseeiht.fr:5022   172.22.221.243:55809    ESTABLISHED
+tcp6       0 1930184 acdc.enseeiht.fr:5022   172.22.221.243:55809    ESTABLISHED
+tcp6       0 1484200 acdc.enseeiht.fr:5022   172.22.221.243:55809    ESTABLISHED
+tcp6       0 1647824 acdc.enseeiht.fr:5022   172.22.221.243:55809    ESTABLISHED
+tcp6       0 2053264 acdc.enseeiht.fr:5022   172.22.221.243:55809    ESTABLISHED
+tcp6       0 1455240 acdc.enseeiht.fr:5022   172.22.221.243:55809    ESTABLISHED
+tcp6       0 1812896 acdc.enseeiht.fr:5022   172.22.221.243:55809    ESTABLISHED
+tcp6       0 1878056 acdc.enseeiht.fr:5022   172.22.221.243:55809    ESTABLISHED
+tcp6       0 2037336 acdc.enseeiht.fr:5022   172.22.221.243:55809    ESTABLISHED
+tcp6       0       0 acdc.enseeiht.fr:5022   172.22.221.243:55809    TIME_WAIT
+tcp6       0       0 acdc.enseeiht.fr:5022   172.22.221.243:55809    TIME_WAIT
+tcp6       0       0 acdc.enseeiht.fr:5022   172.22.221.243:55809    TIME_WAIT
+tcp6       0       0 acdc.enseeiht.fr:5022   172.22.221.243:55809    TIME_WAIT
