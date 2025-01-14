@@ -13,11 +13,9 @@ import java.nio.file.StandardOpenOption;
 
 public class UploadService implements Runnable {
     private Socket s;
-    private ByteBuffer buffer;
 
     public UploadService(Socket s) {
         this.s = s;
-        this.buffer = ByteBuffer.allocate(2048);
     }
 
     @Override
@@ -31,19 +29,46 @@ public class UploadService implements Runnable {
             LineNumberReader reader = new LineNumberReader(in);
             String request = reader.readLine();
 
+            // Request form is "getfile:[<offset;<size>]<filename>"
+
             // Check if request form is correct
-			if (request.startsWith("getfile:")) {
-                // Request form is "getfile:<filename>"
+            if (request.startsWith("getfile:")) {
                 Path workspaceRoot = Paths.get(System.getProperty("user.dir"));
-                Path filePath = Paths.get(workspaceRoot.toString(), "/downloads", request.substring(8));
-                System.out.println("Requested file is : " + request.substring(8));
+                Long fragmentOffset = Long.parseLong(request.substring(9, request.indexOf(";")));
+                Long fragmentSize = Long.parseLong(request.substring(request.indexOf(";") + 1, request.indexOf("]")));
+                String fragmentName = request.substring(request.indexOf("]") + 1);
+                Path filePath = Paths.get(workspaceRoot.toString(), "/downloads", fragmentName);
+                System.out.println("Requested file is : " + fragmentName + " with offset " + fragmentOffset + " and size " + fragmentSize);
 
-                // Read the file into the buffer
+                // Open the file for reading
                 FileChannel file = FileChannel.open(filePath, StandardOpenOption.READ);
-                file.read(buffer);
 
-                // Write into the socker output
-                out.write(buffer.array());
+                // Set the position of the FileChannel to the offset
+                file.position(fragmentOffset);
+
+                // Define a smaller buffer size for each read operation
+                int bufferSize = 4096; // Example: 4 KB
+                ByteBuffer buffer = ByteBuffer.allocate(bufferSize);
+
+                // Read the file and write to the output stream
+                long remainingSize = fragmentSize;
+                while (remainingSize > 0) {
+                    buffer.clear(); // Reset the buffer for the next read
+                    int bytesToRead = (int) Math.min(bufferSize, remainingSize);
+                    buffer.limit(bytesToRead); // Limit the buffer to the remaining size
+                    int bytesRead = file.read(buffer);
+
+                    if (bytesRead == -1) {
+                        break; // End of file reached
+                    }
+
+                    buffer.flip(); // Prepare the buffer for writing
+                    System.out.println("Buffer is : `" + new String(buffer.array(), "ASCII") + "`");
+                    out.write(buffer.array(), 0, bytesRead);
+                    remainingSize -= bytesRead;
+                }
+
+                file.close();
             }
 
             in.close();
@@ -54,5 +79,4 @@ public class UploadService implements Runnable {
             e.printStackTrace();
         }
     }
-
 }

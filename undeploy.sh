@@ -11,39 +11,6 @@ devices=(
     "eagles"
     "epica"
     "hendrix"
-
-    "albator"
-    "bouba"
-    "calimero"
-    "candy"
-    "casimir"
-    "clementine"
-    "diabolo"
-    "esteban"
-    "goldorak"
-    "heidi"
-    "ladyoscar"
-    "maya"
-    "scoubidou"
-    "snorki"
-    "tao"
-
-    "apollinaire"
-    "baudelaire"
-    "brassens"
-    "demusset"
-    "ferre"
-    "gautier"
-    "hugo"
-    "lafontaine"
-    "lamartine"
-    "mallarme"
-    "maupassant"
-    "poe"
-    "prevert"
-    "rimbaud"
-    "sand"
-    "verlaine"
 )
 
 # Stop Clients
@@ -73,4 +40,4 @@ tmux new-session -d -s iode-unsession "
 
 sleep 0.2;
 
-pkill -f tmux
+tmux kill-session -a

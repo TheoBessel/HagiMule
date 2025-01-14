@@ -21,7 +21,10 @@ public class DaemonMain {
             try (ServerSocket s = new ServerSocket(port)) {
                 // boolean disconnected = false;
                 while (true) {
-                    new Thread(new UploadService(s.accept())).start();
+
+                    Thread t2 = new Thread(new UploadService(s.accept()));
+
+                    t2.start();
                 }
             }
         } catch (IOException e) {

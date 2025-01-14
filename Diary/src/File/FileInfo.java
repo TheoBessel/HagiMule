@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 import Device.ClientInfo;
+import File.Fragment.FileFragment;
 
 /**
  * The File interface reprensents the essential informations the client needs to
@@ -23,6 +24,7 @@ public interface FileInfo extends Remote {
      */
     public Long getSize() throws RemoteException;
 
+
     /**
      * The getOwners method returns the owners of the file.
      * @return the owners of the file
@@ -40,4 +42,7 @@ public interface FileInfo extends Remote {
      * @param owner the owner of the file to remove
      */
     public void removeOwner(ClientInfo owner) throws RemoteException;
+
+
+    public List<FileFragment> fragmentFile() throws RemoteException;
 }
