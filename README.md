@@ -79,7 +79,7 @@ Nous avons décidé de garder le débit réseau intact (en ne créant donc pas u
 
 Nous avons alors mesuré (grâce à la commande netstat) le nombre d'octets envoyés par l'interface réseau d'un des peers, au peer qui effectue un téléchargement. Nous avons fait ces mesures au cours du temps de téléchargement et en faisant varier le nombre de peers pour obtenir les trois courbes suivantes :
 
-<!-- TODO <insérer image> -->
+![Evalution de performances](./doc/evalPerf.png)
 
 Les mesures ont été faites sur le transfert d'une image tirée de Wikipédia, pesant approximativement 400Mo et pour 1, 5 et 10 peers. (1 peer correspondant à un téléchargement n'étant pas parallèle qui servira donc de référence)
 
