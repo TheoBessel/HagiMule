@@ -1,8 +1,10 @@
 package Diary;
+import java.io.File;
 import java.rmi.RemoteException;
 import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,9 +94,9 @@ public class DiaryImpl extends UnicastRemoteObject implements Diary {
     }
 
     public void removeClient(ClientInfo owner) {
+        List<String> toRemove = new ArrayList<>();
         files.forEach((key, value) -> {
             try {
-
                 try {
                     FileInfo updatedFile = this.files.get(key);
                     if (updatedFile != null) {
@@ -105,6 +107,10 @@ public class DiaryImpl extends UnicastRemoteObject implements Diary {
                         );
 
                         System.out.println("File `" + updatedFile.getName() + "` from client " + owner.getAddress() + " successfully removed from the diary !");
+                    }
+
+                    if (value.getOwners().size() == 0) {
+                        toRemove.add(key);
                     }
                 } catch (Exception e) {
                     System.err.println("Error while removing file from the Diary : unknown host.");
@@ -118,6 +124,9 @@ public class DiaryImpl extends UnicastRemoteObject implements Diary {
                 e.printStackTrace();
             }
         });
+        for (String fileName : toRemove) {
+            files.remove(fileName);
+        }
     }
 
     /**
